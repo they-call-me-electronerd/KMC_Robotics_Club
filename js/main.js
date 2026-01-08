@@ -17,6 +17,41 @@ function adjustNavLinks(isRootPage) {
             link.setAttribute('href', targetMap[pageKey]);
         }
     });
+
+    // Set active page highlighting
+    highlightActivePage();
+}
+
+// Highlight current active page in navigation
+function highlightActivePage() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('[data-page]');
+    
+    // Determine current page
+    let currentPage = 'home';
+    if (currentPath.includes('about')) currentPage = 'about';
+    else if (currentPath.includes('team')) currentPage = 'team';
+    else if (currentPath.includes('events')) currentPage = 'events';
+    else if (currentPath.includes('gallery')) currentPage = 'gallery';
+    else if (currentPath.includes('join')) currentPage = 'join';
+    else if (currentPath.includes('contact')) currentPage = 'contact';
+    
+    navLinks.forEach(link => {
+        const pageKey = link.getAttribute('data-page');
+        if (pageKey === currentPage) {
+            link.classList.add('active');
+            // Add visual indicator for active state
+            if (link.classList.contains('nav-link')) {
+                link.style.color = 'var(--accent)';
+                link.style.textShadow = '0 0 10px rgba(0, 242, 255, 0.5)';
+            }
+            if (link.classList.contains('nav-link-mobile')) {
+                link.style.borderLeftColor = 'var(--accent)';
+                link.style.backgroundColor = 'rgba(0, 242, 255, 0.05)';
+                link.style.color = 'var(--accent)';
+            }
+        }
+    });
 }
 
 // Load navigation component
@@ -35,6 +70,13 @@ function loadNavigation() {
         .then(html => {
             navPlaceholder.innerHTML = html;
             adjustNavLinks(isRootPage);
+            
+            // Fix logo image path
+            const logoImg = navPlaceholder.querySelector('img[alt="KMC RC Logo"]');
+            if (logoImg) {
+                logoImg.src = isRootPage ? 'assets/images/kmc-rc-logo.png' : '../assets/images/kmc-rc-logo.png';
+            }
+            
             // Re-initialize Feather Icons after nav loads
             if (window.feather && typeof window.feather.replace === 'function') {
                 window.feather.replace();
@@ -60,6 +102,10 @@ function loadFooter() {
         .then(response => response.text())
         .then(html => {
             footerPlaceholder.innerHTML = html;
+            
+            // Adjust footer links based on current page location
+            adjustFooterLinks(isRootPage);
+            
             if (window.feather && typeof window.feather.replace === 'function') {
                 window.feather.replace();
             }
@@ -68,6 +114,35 @@ function loadFooter() {
             }
         })
         .catch(error => console.error('Error loading footer:', error));
+}
+
+// Adjust footer links based on page location
+function adjustFooterLinks(isRootPage) {
+    const footerRoot = document.getElementById('footer-placeholder');
+    if (!footerRoot) return;
+
+    const targetMap = {
+        home: isRootPage ? 'index.html' : '../index.html',
+        about: isRootPage ? 'pages/about.html' : 'about.html',
+        team: isRootPage ? 'pages/team.html' : 'team.html',
+        events: isRootPage ? 'pages/events.html' : 'events.html',
+        gallery: isRootPage ? 'pages/gallery.html' : 'gallery.html',
+        join: isRootPage ? 'pages/join.html' : 'join.html',
+        contact: isRootPage ? 'pages/contact.html' : 'contact.html'
+    };
+
+    footerRoot.querySelectorAll('[data-page]').forEach((link) => {
+        const pageKey = link.getAttribute('data-page');
+        if (pageKey && targetMap[pageKey]) {
+            link.setAttribute('href', targetMap[pageKey]);
+        }
+    });
+
+    // Also fix logo image path
+    const logoImg = footerRoot.querySelector('img[alt="KMC RC"]');
+    if (logoImg) {
+        logoImg.src = isRootPage ? 'assets/images/kmc-rc-logo.png' : '../assets/images/kmc-rc-logo.png';
+    }
 }
 
 // Initialize mobile menu
