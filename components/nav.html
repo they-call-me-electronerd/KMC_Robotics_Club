@@ -1,20 +1,20 @@
 ﻿<!-- Global Navigation Component - Include this in all pages -->
-<header class="fixed inset-x-0 top-0 z-50 flex justify-center pt-6 px-4 transition-all duration-300" id="main-header">
+<header class="fixed inset-x-0 top-0 z-50 flex justify-center pt-4 sm:pt-6 px-3 sm:px-4 transition-all duration-300" id="main-header">
     <!-- Pill-shaped Navigation Container -->
-    <nav class="enhanced-nav relative rounded-none md:rounded-full px-4 md:px-8 py-3 max-w-6xl w-full flex items-center justify-between overflow-hidden group" style="clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);">
+    <nav class="enhanced-nav relative rounded-xl md:rounded-full px-3 sm:px-4 md:px-8 py-2.5 sm:py-3 max-w-6xl w-full flex items-center justify-between overflow-hidden group" style="clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);">
         
         <!-- Cyber Grid Background -->
         <div class="absolute inset-0 bg-[linear-gradient(rgba(0,242,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,242,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none opacity-50"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(0,242,255,0.02)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
         <!-- Club Logo & Name -->
-        <a href="index.html" class="flex items-center space-x-4 group/logo relative z-10" data-page="home">
-            <div class="logo-container w-12 h-12 rounded-sm flex items-center justify-center transition-all duration-300 overflow-hidden bg-[#050a14] border border-[#00f2ff]/30 shadow-[0_0_10px_rgba(0,242,255,0.1)] group-hover/logo:shadow-[0_0_20px_rgba(0,242,255,0.4)] group-hover/logo:border-[#00f2ff]">
-                <img src="assets/images/kmc-rc-logo.png" alt="KMC RC Logo" class="w-full h-full object-contain p-1.5" />
+        <a href="index.html" class="flex items-center space-x-2 sm:space-x-4 group/logo relative z-10" data-page="home">
+            <div class="logo-container w-10 h-10 sm:w-12 sm:h-12 rounded-sm flex items-center justify-center transition-all duration-300 overflow-hidden bg-[#050a14] border border-[#00f2ff]/30 shadow-[0_0_10px_rgba(0,242,255,0.1)] group-hover/logo:shadow-[0_0_20px_rgba(0,242,255,0.4)] group-hover/logo:border-[#00f2ff]">
+                <img src="assets/images/kmc-rc-logo.png" alt="KMC RC Logo" class="w-full h-full object-contain p-1 sm:p-1.5" />
             </div>
-            <div class="hidden sm:block">
-                <div class="text-xl font-bold font-orbitron text-white group-hover/logo:text-[#00f2ff] transition-colors tracking-widest text-shadow-sm">KMC RC</div>
-                <div class="text-[0.65rem] text-slate-400 font-mono font-medium group-hover/logo:text-white transition-colors uppercase tracking-[0.2em]">Robotics Club</div>
+            <div class="hidden xs:block sm:block">
+                <div class="text-base sm:text-xl font-bold font-orbitron text-white group-hover/logo:text-[#00f2ff] transition-colors tracking-wider sm:tracking-widest text-shadow-sm">KMC RC</div>
+                <div class="text-[0.55rem] sm:text-[0.65rem] text-slate-400 font-mono font-medium group-hover/logo:text-white transition-colors uppercase tracking-[0.15em] sm:tracking-[0.2em]">Robotics Club</div>
             </div>
         </a>
         
@@ -40,28 +40,28 @@
         </div>
 
         <!-- Mobile Menu Button -->
-        <button id="mobile-menu-button" class="md:hidden text-[#00f2ff] hover:text-white transition-colors relative z-10 p-2 hover:bg-white/5 rounded">
+        <button id="mobile-menu-button" class="md:hidden text-[#00f2ff] hover:text-white transition-colors relative z-10 p-2 hover:bg-white/5 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Toggle mobile menu" aria-expanded="false">
             <i data-feather="menu" class="w-6 h-6"></i>
         </button>
     </nav>
 
     <!-- Mobile Navigation Panel -->
-    <div id="mobile-menu" class="enhanced-nav hidden md:hidden absolute top-24 left-4 right-4 rounded-xl border border-[#00f2ff]/20 overflow-hidden transform transition-all duration-300 origin-top scale-95 opacity-0 backdrop-blur-xl bg-[#050a14]/95 shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+    <div id="mobile-menu" class="enhanced-nav hidden md:hidden absolute top-20 sm:top-24 left-3 right-3 sm:left-4 sm:right-4 rounded-xl border border-[#00f2ff]/20 overflow-hidden transform transition-all duration-300 origin-top scale-95 opacity-0 backdrop-blur-xl bg-[#050a14]/98 shadow-[0_10px_40px_rgba(0,0,0,0.5)]" role="navigation" aria-label="Mobile navigation">
          <!-- Cyber Grid Background Mobile -->
         <div class="absolute inset-0 bg-[linear-gradient(rgba(0,242,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,242,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none opacity-30"></div>
 
-        <div class="px-6 py-6 flex flex-col space-y-2 relative z-10">
-            <a href="index.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r" data-page="home">Home</a>
-            <a href="pages/about.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r" data-page="about">About</a>
-            <a href="pages/team.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r" data-page="team">Team</a>
-             <a href="pages/events.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r flex items-center justify-between" data-page="events">
-                Events
+        <div class="px-4 sm:px-6 py-5 sm:py-6 flex flex-col space-y-1 sm:space-y-2 relative z-10">
+            <a href="index.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r flex items-center min-h-[48px]" data-page="home">Home</a>
+            <a href="pages/about.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r flex items-center min-h-[48px]" data-page="about">About</a>
+            <a href="pages/team.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r flex items-center min-h-[48px]" data-page="team">Team</a>
+             <a href="pages/events.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r flex items-center justify-between min-h-[48px]" data-page="events">
+                <span>Events</span>
                 <span class="text-[10px] font-bold px-2 py-0.5 rounded border border-[#00f2ff] text-[#00f2ff] bg-[#00f2ff]/10">LIVE</span>
             </a>
-            <a href="pages/gallery.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r" data-page="gallery">Gallery</a>
+            <a href="pages/gallery.html" class="nav-link-mobile pl-4 py-3 border-l-2 border-transparent hover:border-[#00f2ff] hover:bg-[#00f2ff]/5 text-slate-300 hover:text-white transition-all rounded-r flex items-center min-h-[48px]" data-page="gallery">Gallery</a>
             
-            <div class="pt-4 mt-2 border-t border-slate-800">
-                <a href="pages/join.html" class="w-full text-center block border border-[#00f2ff] text-[#00f2ff] font-bold py-3 rounded hover:bg-[#00f2ff] hover:text-[#050a14] transition-all font-orbitron uppercase tracking-widest shadow-[0_0_15px_rgba(0,242,255,0.1)] hover:shadow-[0_0_20px_rgba(0,242,255,0.4)]" data-page="join">Join Us</a>
+            <div class="pt-3 sm:pt-4 mt-2 border-t border-slate-800">
+                <a href="pages/join.html" class="w-full text-center block border border-[#00f2ff] text-[#00f2ff] font-bold py-3 rounded-lg hover:bg-[#00f2ff] hover:text-[#050a14] transition-all font-orbitron uppercase tracking-widest shadow-[0_0_15px_rgba(0,242,255,0.1)] hover:shadow-[0_0_20px_rgba(0,242,255,0.4)] min-h-[48px] flex items-center justify-center" data-page="join">Join Us</a>
             </div>
         </div>
     </div>

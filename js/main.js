@@ -103,9 +103,10 @@ if (window.AOS && typeof window.AOS.init === 'function') {
     });
 }
 
-// Mobile menu toggle
+// Mobile menu toggle with touch support
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobile-menu');
+    const mobileBtn = document.getElementById('mobile-menu-button');
     if (!mobileMenu) return;
     const isHidden = mobileMenu.classList.contains('hidden');
     
@@ -115,16 +116,46 @@ function toggleMobileMenu() {
         void mobileMenu.offsetWidth;
         mobileMenu.classList.remove('opacity-0', 'scale-95');
         mobileMenu.classList.add('opacity-100', 'scale-100');
+        // Update button icon to X
+        if (mobileBtn) {
+            mobileBtn.innerHTML = '<i data-feather="x" class="w-6 h-6"></i>';
+            if (window.feather) feather.replace();
+        }
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = 'hidden';
     } else {
         mobileMenu.classList.remove('opacity-100', 'scale-100');
         mobileMenu.classList.add('opacity-0', 'scale-95');
+        // Update button icon back to menu
+        if (mobileBtn) {
+            mobileBtn.innerHTML = '<i data-feather="menu" class="w-6 h-6"></i>';
+            if (window.feather) feather.replace();
+        }
+        // Restore body scroll
+        document.body.style.overflow = '';
         setTimeout(() => {
-            if (mobileMenu.classList.contains('opacity-0')) { // Check to prevent race condition
+            if (mobileMenu.classList.contains('opacity-0')) {
                 mobileMenu.classList.add('hidden');
             }
         }, 300); 
     }
 }
+
+// Close mobile menu when clicking on a link
+document.addEventListener('click', function(e) {
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (e.target.closest('.nav-link-mobile') && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        toggleMobileMenu();
+    }
+});
+
+// Close mobile menu on escape key
+document.addEventListener('keydown', function(e) {
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (e.key === 'Escape' && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        toggleMobileMenu();
+    }
+});
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
@@ -138,16 +169,38 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
     });
 });
 
-// Particle animation with increased speed
+// Particle animation with reduced intensity on mobile for performance
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas ? canvas.getContext('2d') : null;
+
+// Detect mobile device
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+// Debounce function for resize events
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 const resize = () => {
     if (!canvas) return;
     canvas.width = innerWidth;
     canvas.height = innerHeight;
+    // Reinitialize particles on resize
+    if (particles.length > 0) {
+        init();
+    }
 };
+
 resize();
-window.addEventListener('resize', resize);
+window.addEventListener('resize', debounce(resize, 250));
 
 class Particle {
     constructor(x, y, dx, dy, size) {
@@ -172,14 +225,17 @@ let particles = [];
 const init = () => {
     if (!canvas) return;
     particles = [];
-    const count = (canvas.width * canvas.height) / 9000;
+    // Significantly reduce particles on mobile for better performance
+    const baseDivisor = isMobile ? 25000 : 9000;
+    const count = Math.min((canvas.width * canvas.height) / baseDivisor, isMobile ? 30 : 80);
     for (let i = 0; i < count; i++) {
         const size = Math.random() * 2 + 1;
         const x = Math.random() * (canvas.width - size * 2) + size;
         const y = Math.random() * (canvas.height - size * 2) + size;
-        // Increased particle speed
-        const dx = Math.random() * 2 - 1; // Increased from 0.4 to 1
-        const dy = Math.random() * 2 - 1; // Increased from 0.4 to 1
+        // Slower particles on mobile for smoother animation
+        const speedMultiplier = isMobile ? 0.5 : 1;
+        const dx = (Math.random() * 2 - 1) * speedMultiplier;
+        const dy = (Math.random() * 2 - 1) * speedMultiplier;
         particles.push(new Particle(x, y, dx, dy, size));
     }
 };
