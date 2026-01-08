@@ -67,9 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     break;
                 }
                 
-                $user = $db->fetchOne("SELECT avatar FROM users WHERE id = :id", ['id' => $_POST['id']]);
-                if ($user && $user['avatar'] && file_exists('../uploads/avatars/' . $user['avatar'])) {
-                    unlink('../uploads/avatars/' . $user['avatar']);
+                $user = $db->fetchOne("SELECT profile_pic FROM users WHERE id = :id", ['id' => $_POST['id']]);
+                if ($user && $user['profile_pic'] && file_exists('../uploads/profiles/' . $user['profile_pic'])) {
+                    unlink('../uploads/profiles/' . $user['profile_pic']);
                 }
                 $db->delete('users', 'id = :id', ['id' => $_POST['id']]);
                 $message = 'User deleted successfully';
@@ -362,8 +362,8 @@ $csrfToken = Security::generateCSRFToken();
                             <tr class="border-b border-slate-800 hover:bg-slate-800/30">
                                 <td class="px-4 py-4">
                                     <div class="flex items-center gap-3">
-                                        <?php if ($user['avatar']): ?>
-                                        <img src="../uploads/avatars/<?= htmlspecialchars($user['avatar']) ?>" alt="" class="w-10 h-10 rounded-full object-cover">
+                                        <?php if ($user['profile_pic']): ?>
+                                        <img src="../uploads/profiles/<?= htmlspecialchars($user['profile_pic']) ?>" alt="" class="w-10 h-10 rounded-full object-cover">
                                         <?php else: ?>
                                         <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
                                             <span class="text-accent font-bold"><?= strtoupper(substr($user['name'], 0, 1)) ?></span>

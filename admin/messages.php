@@ -94,39 +94,39 @@ $page = max(1, (int)($_GET['page'] ?? 1));
 $limit = 20;
 $offset = ($page - 1) * $limit;
 
-$where = 'recipient_id IS NULL OR recipient_id = :admin_id'; // Contact form messages or messages to admin
+$where = 'm.recipient_id IS NULL OR m.recipient_id = :admin_id'; // Contact form messages or messages to admin
 $params = ['admin_id' => Security::getCurrentUserId()];
 
 $filter = $_GET['filter'] ?? 'inbox';
 
 switch ($filter) {
     case 'unread':
-        $where .= " AND status = 'unread'";
+        $where .= " AND m.status = 'unread'";
         break;
     case 'contact':
-        $where = "is_from_guest = 1";
+        $where = "m.is_from_guest = 1";
         $params = [];
         break;
     case 'archived':
-        $where .= " AND status = 'archived'";
+        $where .= " AND m.status = 'archived'";
         break;
     case 'sent':
-        $where = 'sender_id = :sender_id';
+        $where = 'm.sender_id = :sender_id';
         $params = ['sender_id' => Security::getCurrentUserId()];
         break;
     default: // inbox
-        $where .= " AND status != 'archived'";
+        $where .= " AND m.status != 'archived'";
         break;
 }
 
 $total = $db->fetchOne(
-    "SELECT COUNT(*) as count FROM messages WHERE {$where}",
+    "SELECT COUNT(*) as count FROM messages m WHERE {$where}",
     $params
 )['count'];
 
 $messages = $db->fetchAll(
     "SELECT m.*, 
-            s.name as sender_name, s.email as sender_email, s.avatar as sender_avatar,
+            s.name as sender_name, s.email as sender_email, s.profile_pic as sender_avatar,
             r.name as receiver_name
      FROM messages m
      LEFT JOIN users s ON m.sender_id = s.id
@@ -142,7 +142,7 @@ $viewMessage = null;
 if (isset($_GET['view'])) {
     $viewMessage = $db->fetchOne(
         "SELECT m.*, 
-                s.name as sender_name, s.email as sender_email, s.avatar as sender_avatar
+                s.name as sender_name, s.email as sender_email, s.profile_pic as sender_avatar
          FROM messages m
          LEFT JOIN users s ON m.sender_id = s.id
          WHERE m.id = :id",
@@ -156,7 +156,7 @@ if (isset($_GET['view'])) {
     // Get replies
     if ($viewMessage) {
         $replies = $db->fetchAll(
-            "SELECT m.*, s.name as sender_name, s.avatar as sender_avatar
+            "SELECT m.*, s.name as sender_name, s.profile_pic as sender_avatar
              FROM messages m
              LEFT JOIN users s ON m.sender_id = s.id
              WHERE m.parent_id = :parent_id
@@ -342,7 +342,7 @@ $csrfToken = Security::generateCSRFToken();
                                 <i data-feather="arrow-left" class="w-4 h-4"></i> Back
                             </a>
                             <div class="flex items-center gap-2">
-                                <?php if (!$viewMessage['is_archived']): ?>
+                                <?php if ($viewMessage['status'] !== 'archived'): ?>
                                 <form method="POST" class="inline">
                                     <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
                                     <input type="hidden" name="form_action" value="archive">
@@ -368,7 +368,7 @@ $csrfToken = Security::generateCSRFToken();
                             
                             <div class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-800">
                                 <?php if ($viewMessage['sender_avatar']): ?>
-                                <img src="../uploads/avatars/<?= htmlspecialchars($viewMessage['sender_avatar']) ?>" alt="" class="w-12 h-12 rounded-full object-cover">
+                                <img src="../uploads/profiles/<?= htmlspecialchars($viewMessage['sender_avatar']) ?>" alt="" class="w-12 h-12 rounded-full object-cover">
                                 <?php else: ?>
                                 <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
                                     <span class="text-accent font-bold text-lg"><?= strtoupper(substr($viewMessage['sender_name'] ?? $viewMessage['sender_email'] ?? 'U', 0, 1)) ?></span>
@@ -395,7 +395,7 @@ $csrfToken = Security::generateCSRFToken();
                                     <div class="bg-slate-800/50 rounded-lg p-4">
                                         <div class="flex items-center gap-3 mb-3">
                                             <?php if ($reply['sender_avatar']): ?>
-                                            <img src="../uploads/avatars/<?= htmlspecialchars($reply['sender_avatar']) ?>" alt="" class="w-8 h-8 rounded-full object-cover">
+                                            <img src="../uploads/profiles/<?= htmlspecialchars($reply['sender_avatar']) ?>" alt="" class="w-8 h-8 rounded-full object-cover">
                                             <?php else: ?>
                                             <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
                                                 <span class="text-accent font-bold text-sm"><?= strtoupper(substr($reply['sender_name'] ?? 'U', 0, 1)) ?></span>
@@ -465,12 +465,12 @@ $csrfToken = Security::generateCSRFToken();
                             <!-- Messages -->
                             <div class="divide-y divide-slate-800">
                                 <?php foreach ($messages as $msg): ?>
-                                <div class="message-row <?= !$msg['is_read'] ? 'unread' : '' ?> flex items-center gap-4 px-4 py-3">
+                                <div class="message-row <?= $msg['status'] === 'unread' ? 'unread' : '' ?> flex items-center gap-4 px-4 py-3">
                                     <input type="checkbox" name="selected[]" value="<?= $msg['id'] ?>" class="select-checkbox w-4 h-4 rounded">
                                     
                                     <a href="?view=<?= $msg['id'] ?>&filter=<?= $filter ?>" class="flex-1 flex items-center gap-4 min-w-0">
                                         <?php if ($msg['sender_avatar']): ?>
-                                        <img src="../uploads/avatars/<?= htmlspecialchars($msg['sender_avatar']) ?>" alt="" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                                        <img src="../uploads/profiles/<?= htmlspecialchars($msg['sender_avatar']) ?>" alt="" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
                                         <?php else: ?>
                                         <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
                                             <span class="text-accent font-bold"><?= strtoupper(substr($msg['sender_name'] ?? $msg['sender_email'] ?? 'U', 0, 1)) ?></span>
@@ -479,14 +479,14 @@ $csrfToken = Security::generateCSRFToken();
                                         
                                         <div class="flex-1 min-w-0">
                                             <div class="flex items-center gap-2 mb-1">
-                                                <span class="text-white font-medium <?= !$msg['is_read'] ? 'font-bold' : '' ?>">
+                                                <span class="text-white font-medium <?= $msg['status'] === 'unread' ? 'font-bold' : '' ?>">
                                                     <?= htmlspecialchars($msg['sender_name'] ?? 'Unknown') ?>
                                                 </span>
-                                                <?php if ($msg['message_type'] === 'contact'): ?>
+                                                <?php if ($msg['is_from_guest']): ?>
                                                 <span class="px-2 py-0.5 rounded text-xs bg-yellow-500/20 text-yellow-400">Contact</span>
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="text-slate-300 truncate <?= !$msg['is_read'] ? 'font-medium' : '' ?>">
+                                            <div class="text-slate-300 truncate <?= $msg['status'] === 'unread' ? 'font-medium' : '' ?>">
                                                 <?= htmlspecialchars($msg['subject']) ?>
                                             </div>
                                             <div class="text-slate-400 text-sm truncate">

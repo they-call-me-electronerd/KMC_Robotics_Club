@@ -57,21 +57,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     if (empty($errors)) {
                         $filename = Security::generateSafeFilename($_FILES['avatar']['name']);
-                        $uploadPath = UPLOAD_DIR . '/avatars/' . $filename;
+                        $uploadPath = UPLOAD_PROFILES . '/' . $filename;
                         
-                        if (!is_dir(UPLOAD_DIR . '/avatars')) {
-                            mkdir(UPLOAD_DIR . '/avatars', 0755, true);
+                        if (!is_dir(UPLOAD_PROFILES)) {
+                            mkdir(UPLOAD_PROFILES, 0755, true);
                         }
                         
                         if (move_uploaded_file($_FILES['avatar']['tmp_name'], $uploadPath)) {
-                            // Delete old avatar
-                            if ($user['avatar'] && file_exists(UPLOAD_DIR . '/avatars/' . $user['avatar'])) {
-                                unlink(UPLOAD_DIR . '/avatars/' . $user['avatar']);
+                            // Delete old profile pic
+                            if ($user['profile_pic'] && file_exists(UPLOAD_PROFILES . '/' . $user['profile_pic'])) {
+                                unlink(UPLOAD_PROFILES . '/' . $user['profile_pic']);
                             }
-                            
-                            $db->update('users', ['avatar' => $filename], 'id = :id', ['id' => $userId]);
-                            $message = 'Avatar updated successfully';
-                            $user['avatar'] = $filename;
+
+                            $db->update('users', ['profile_pic' => $filename], 'id = :id', ['id' => $userId]);
+                            $message = 'Profile picture updated successfully';
+                            $user['profile_pic'] = $filename;
                         } else {
                             $error = 'Failed to upload avatar';
                         }
@@ -198,8 +198,8 @@ $activeTab = $_GET['tab'] ?? 'profile';
         <div class="member-card rounded-lg p-6 mb-6">
             <div class="flex flex-col sm:flex-row items-center gap-6">
                 <div class="relative">
-                    <?php if ($user['avatar']): ?>
-                    <img src="../uploads/avatars/<?= htmlspecialchars($user['avatar']) ?>" alt="" class="w-24 h-24 rounded-full object-cover">
+                    <?php if ($user['profile_pic']): ?>
+                    <img src="../uploads/profiles/<?= htmlspecialchars($user['profile_pic']) ?>" alt="" class="w-24 h-24 rounded-full object-cover">
                     <?php else: ?>
                     <div class="w-24 h-24 rounded-full bg-accent/10 flex items-center justify-center">
                         <span class="text-accent font-bold text-3xl"><?= strtoupper(substr($user['name'], 0, 1)) ?></span>

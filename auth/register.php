@@ -6,6 +6,9 @@
 require_once __DIR__ . '/../includes/Security.php';
 require_once __DIR__ . '/../includes/Auth.php';
 
+// Start session
+Security::startSession();
+
 // Redirect if already logged in
 if (Security::isLoggedIn()) {
     $redirect = Security::isAdmin() ? '../admin/dashboard.php' : '../member/dashboard.php';

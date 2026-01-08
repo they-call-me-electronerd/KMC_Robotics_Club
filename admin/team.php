@@ -25,14 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             case 'update':
                 $memberData = [
                     'name' => Security::sanitize($_POST['name']),
-                    'position' => Security::sanitize($_POST['position']),
+                    'role' => Security::sanitize($_POST['position']),
                     'category' => $_POST['category'],
                     'bio' => Security::sanitize($_POST['bio'] ?? ''),
                     'email' => filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) ?: null,
-                    'phone' => Security::sanitize($_POST['phone'] ?? ''),
-                    'linkedin_url' => filter_var($_POST['linkedin_url'] ?? '', FILTER_VALIDATE_URL) ?: null,
-                    'github_url' => filter_var($_POST['github_url'] ?? '', FILTER_VALIDATE_URL) ?: null,
-                    'display_order' => !empty($_POST['display_order']) ? (int)$_POST['display_order'] : 0,
+                    'linkedin' => filter_var($_POST['linkedin_url'] ?? '', FILTER_VALIDATE_URL) ?: null,
+                    'github' => filter_var($_POST['github_url'] ?? '', FILTER_VALIDATE_URL) ?: null,
+                    'position_order' => !empty($_POST['display_order']) ? (int)$_POST['display_order'] : 0,
                     'is_active' => isset($_POST['is_active']) ? 1 : 0
                 ];
                 
@@ -52,12 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if (move_uploaded_file($_FILES['image']['tmp_name'], UPLOAD_TEAM . '/' . $filename)) {
                             // Delete old image if updating
                             if ($action === 'update' && !empty($_POST['id'])) {
-                                $oldMember = $db->fetchOne("SELECT image_path FROM team_members WHERE id = :id", ['id' => $_POST['id']]);
-                                if ($oldMember && $oldMember['image_path'] && file_exists(UPLOAD_TEAM . '/' . $oldMember['image_path'])) {
-                                    unlink(UPLOAD_TEAM . '/' . $oldMember['image_path']);
+                                $oldMember = $db->fetchOne("SELECT photo_path FROM team_members WHERE id = :id", ['id' => $_POST['id']]);
+                                if ($oldMember && $oldMember['photo_path'] && file_exists(UPLOAD_TEAM . '/' . $oldMember['photo_path'])) {
+                                    unlink(UPLOAD_TEAM . '/' . $oldMember['photo_path']);
                                 }
                             }
-                            $memberData['image_path'] = $filename;
+                            $memberData['photo_path'] = $filename;
                         }
                     }
                 }
@@ -72,10 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
                 
             case 'delete':
-                $member = $db->fetchOne("SELECT image_path FROM team_members WHERE id = :id", ['id' => $_POST['id']]);
+                $member = $db->fetchOne("SELECT photo_path FROM team_members WHERE id = :id", ['id' => $_POST['id']]);
                 if ($member) {
-                    if ($member['image_path'] && file_exists(UPLOAD_TEAM . '/' . $member['image_path'])) {
-                        unlink(UPLOAD_TEAM . '/' . $member['image_path']);
+                    if ($member['photo_path'] && file_exists(UPLOAD_TEAM . '/' . $member['photo_path'])) {
+                        unlink(UPLOAD_TEAM . '/' . $member['photo_path']);
                     }
                     $db->delete('team_members', 'id = :id', ['id' => $_POST['id']]);
                     $message = 'Team member removed successfully';
@@ -117,7 +116,7 @@ $members = $db->fetchAll(
      FROM team_members t
      LEFT JOIN users u ON t.user_id = u.id
      WHERE {$where}
-     ORDER BY t.display_order ASC, t.created_at DESC
+     ORDER BY t.position_order ASC, t.created_at DESC
      LIMIT {$limit} OFFSET {$offset}",
     $params
 );
@@ -274,7 +273,7 @@ $showForm = isset($_GET['action']) && $_GET['action'] === 'create' || $editMembe
                         <div>
                             <label class="block text-sm font-medium text-slate-300 mb-2">Position/Role *</label>
                             <input type="text" name="position" required class="form-input w-full px-4 py-3 rounded-lg text-white"
-                                   value="<?= htmlspecialchars($editMember['position'] ?? '') ?>" placeholder="e.g., President, Technical Lead">
+                                   value="<?= htmlspecialchars($editMember['role'] ?? '') ?>" placeholder="e.g., President, Technical Lead">
                         </div>
                         
                         <div>
@@ -293,27 +292,21 @@ $showForm = isset($_GET['action']) && $_GET['action'] === 'create' || $editMembe
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-2">Phone</label>
-                            <input type="tel" name="phone" class="form-input w-full px-4 py-3 rounded-lg text-white"
-                                   value="<?= htmlspecialchars($editMember['phone'] ?? '') ?>">
-                        </div>
-                        
-                        <div>
                             <label class="block text-sm font-medium text-slate-300 mb-2">Display Order</label>
                             <input type="number" name="display_order" class="form-input w-full px-4 py-3 rounded-lg text-white"
-                                   value="<?= $editMember['display_order'] ?? 0 ?>" placeholder="Lower number = higher priority">
+                                   value="<?= $editMember['position_order'] ?? 0 ?>" placeholder="Lower number = higher priority">
                         </div>
                         
                         <div>
                             <label class="block text-sm font-medium text-slate-300 mb-2">LinkedIn URL</label>
                             <input type="url" name="linkedin_url" class="form-input w-full px-4 py-3 rounded-lg text-white"
-                                   value="<?= htmlspecialchars($editMember['linkedin_url'] ?? '') ?>">
+                                   value="<?= htmlspecialchars($editMember['linkedin'] ?? '') ?>">
                         </div>
                         
                         <div>
                             <label class="block text-sm font-medium text-slate-300 mb-2">GitHub URL</label>
                             <input type="url" name="github_url" class="form-input w-full px-4 py-3 rounded-lg text-white"
-                                   value="<?= htmlspecialchars($editMember['github_url'] ?? '') ?>">
+                                   value="<?= htmlspecialchars($editMember['github'] ?? '') ?>">
                         </div>
                         
                         <div class="md:col-span-2">
@@ -324,8 +317,8 @@ $showForm = isset($_GET['action']) && $_GET['action'] === 'create' || $editMembe
                         <div>
                             <label class="block text-sm font-medium text-slate-300 mb-2">Profile Image</label>
                             <input type="file" name="image" accept="image/*" class="form-input w-full px-4 py-3 rounded-lg text-white">
-                            <?php if ($editMember && $editMember['image_path']): ?>
-                            <img src="../uploads/team/<?= htmlspecialchars($editMember['image_path']) ?>" alt="Current image" class="mt-2 h-20 rounded">
+                            <?php if ($editMember && $editMember['photo_path']): ?>
+                            <img src="../uploads/team/<?= htmlspecialchars($editMember['photo_path']) ?>" alt="Current image" class="mt-2 h-20 rounded">
                             <?php endif; ?>
                         </div>
                         
@@ -361,12 +354,12 @@ $showForm = isset($_GET['action']) && $_GET['action'] === 'create' || $editMembe
             </div>
             
             <!-- Team Members Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <?php foreach ($members as $member): ?>
                 <div class="team-card stat-card-admin rounded-lg overflow-hidden">
                     <div class="aspect-square relative">
-                        <?php if ($member['image_path']): ?>
-                        <img src="../uploads/team/<?= htmlspecialchars($member['image_path']) ?>" alt="<?= htmlspecialchars($member['name']) ?>" 
+                        <?php if ($member['photo_path']): ?>
+                        <img src="../uploads/team/<?= htmlspecialchars($member['photo_path']) ?>" alt="<?= htmlspecialchars($member['name']) ?>" 
                              class="w-full h-full object-cover">
                         <?php else: ?>
                         <div class="w-full h-full bg-gradient-to-br from-accent/20 to-secondary-accent/20 flex items-center justify-center">
@@ -405,7 +398,7 @@ $showForm = isset($_GET['action']) && $_GET['action'] === 'create' || $editMembe
                         <div class="flex items-start justify-between mb-2">
                             <div>
                                 <h3 class="text-white font-bold"><?= htmlspecialchars($member['name']) ?></h3>
-                                <p class="text-accent text-sm"><?= htmlspecialchars($member['position']) ?></p>
+                                <p class="text-accent text-sm"><?= htmlspecialchars($member['role']) ?></p>
                             </div>
                             <span class="px-2 py-1 rounded text-xs bg-purple-500/20 text-purple-400"><?= ucfirst($member['category']) ?></span>
                         </div>
@@ -420,17 +413,17 @@ $showForm = isset($_GET['action']) && $_GET['action'] === 'create' || $editMembe
                                 <i data-feather="mail" class="w-4 h-4"></i>
                             </a>
                             <?php endif; ?>
-                            <?php if ($member['linkedin_url']): ?>
-                            <a href="<?= htmlspecialchars($member['linkedin_url']) ?>" target="_blank" class="text-slate-400 hover:text-accent">
+                            <?php if ($member['linkedin']): ?>
+                            <a href="<?= htmlspecialchars($member['linkedin']) ?>" target="_blank" class="text-slate-400 hover:text-accent">
                                 <i data-feather="linkedin" class="w-4 h-4"></i>
                             </a>
                             <?php endif; ?>
-                            <?php if ($member['github_url']): ?>
-                            <a href="<?= htmlspecialchars($member['github_url']) ?>" target="_blank" class="text-slate-400 hover:text-accent">
+                            <?php if ($member['github']): ?>
+                            <a href="<?= htmlspecialchars($member['github']) ?>" target="_blank" class="text-slate-400 hover:text-accent">
                                 <i data-feather="github" class="w-4 h-4"></i>
                             </a>
                             <?php endif; ?>
-                            <span class="ml-auto text-xs text-slate-500">Order: <?= $member['display_order'] ?></span>
+                            <span class="ml-auto text-xs text-slate-500">Order: <?= $member['position_order'] ?></span>
                         </div>
                     </div>
                 </div>

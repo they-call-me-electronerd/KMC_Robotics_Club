@@ -126,8 +126,8 @@ $featuredEvents = $db->fetchAll(
                 
                 <div class="flex items-center gap-4">
                     <div class="flex items-center gap-3">
-                        <?php if ($user['avatar']): ?>
-                        <img src="../uploads/avatars/<?= htmlspecialchars($user['avatar']) ?>" alt="" class="w-8 h-8 rounded-full object-cover">
+                        <?php if ($user['profile_pic']): ?>
+                        <img src="../uploads/profiles/<?= htmlspecialchars($user['profile_pic']) ?>" alt="" class="w-8 h-8 rounded-full object-cover">
                         <?php else: ?>
                         <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
                             <span class="text-accent font-bold text-sm"><?= strtoupper(substr($user['name'], 0, 1)) ?></span>
@@ -283,8 +283,8 @@ $featuredEvents = $db->fetchAll(
             <div class="space-y-6">
                 <!-- Profile Card -->
                 <div class="member-card rounded-lg p-6 text-center">
-                    <?php if ($user['avatar']): ?>
-                    <img src="../uploads/avatars/<?= htmlspecialchars($user['avatar']) ?>" alt="" class="w-20 h-20 rounded-full object-cover mx-auto mb-4">
+                    <?php if ($user['profile_pic']): ?>
+                    <img src="../uploads/profiles/<?= htmlspecialchars($user['profile_pic']) ?>" alt="" class="w-20 h-20 rounded-full object-cover mx-auto mb-4">
                     <?php else: ?>
                     <div class="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
                         <span class="text-accent font-bold text-2xl"><?= strtoupper(substr($user['name'], 0, 1)) ?></span>

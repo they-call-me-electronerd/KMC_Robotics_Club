@@ -154,19 +154,19 @@ const Team = {
         return `
             <div class="team-card bg-light-navy/50 backdrop-blur-sm rounded-lg overflow-hidden border border-slate-800 hover:border-accent/30 transition text-center p-6" data-aos="fade-up">
                 <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4">
-                    ${member.image_path 
-                        ? `<img src="uploads/team/${member.image_path}" alt="${member.name}" class="w-full h-full object-cover">`
+                    ${member.photo_path 
+                        ? `<img src="uploads/team/${member.photo_path}" alt="${member.name}" class="w-full h-full object-cover">`
                         : `<div class="w-full h-full bg-gradient-to-br from-accent/20 to-secondary-accent/20 flex items-center justify-center">
                             <span class="text-accent font-bold text-2xl">${member.name.charAt(0)}</span>
                            </div>`
                     }
                 </div>
                 <h3 class="text-lg font-bold text-white">${member.name}</h3>
-                <p class="text-accent text-sm">${member.position}</p>
+                <p class="text-accent text-sm">${member.role}</p>
                 ${member.bio ? `<p class="text-slate-400 text-sm mt-2">${member.bio}</p>` : ''}
                 <div class="flex justify-center gap-3 mt-4">
-                    ${member.linkedin_url ? `<a href="${member.linkedin_url}" target="_blank" class="text-slate-400 hover:text-accent"><i data-feather="linkedin" class="w-5 h-5"></i></a>` : ''}
-                    ${member.github_url ? `<a href="${member.github_url}" target="_blank" class="text-slate-400 hover:text-accent"><i data-feather="github" class="w-5 h-5"></i></a>` : ''}
+                    ${member.linkedin ? `<a href="${member.linkedin}" target="_blank" class="text-slate-400 hover:text-accent"><i data-feather="linkedin" class="w-5 h-5"></i></a>` : ''}
+                    ${member.github ? `<a href="${member.github}" target="_blank" class="text-slate-400 hover:text-accent"><i data-feather="github" class="w-5 h-5"></i></a>` : ''}
                     ${member.email ? `<a href="mailto:${member.email}" class="text-slate-400 hover:text-accent"><i data-feather="mail" class="w-5 h-5"></i></a>` : ''}
                 </div>
             </div>

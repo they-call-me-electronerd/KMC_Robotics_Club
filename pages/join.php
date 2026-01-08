@@ -28,7 +28,7 @@ $success = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $registrationEnabled) {
     // Validate CSRF
-    if (!Security::validateCSRFToken($_POST['csrf_token'] ?? '')) {
+    if (!Security::verifyCSRFToken($_POST['csrf_token'] ?? '')) {
         $errors[] = 'Invalid request. Please try again.';
     } else {
         $fullName = trim($_POST['full_name'] ?? '');

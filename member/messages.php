@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         switch ($action) {
             case 'send':
-                $receiverId = (int)$_POST['receiver_id'];
+                $recipientId = (int)$_POST['recipient_id'];
                 $subject = Security::sanitize($_POST['subject']);
                 $messageText = Security::cleanHtml($_POST['message']);
                 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $db->insert('messages', [
                         'sender_id' => $userId,
-                        'recipient_id' => $receiverId,
+                        'recipient_id' => $recipientId,
                         'subject' => $subject,
                         'message' => $messageText
                     ]);
@@ -78,7 +78,7 @@ $filter = $_GET['filter'] ?? 'inbox';
 switch ($filter) {
     case 'sent':
         $messages = $db->fetchAll(
-            "SELECT m.*, r.name as receiver_name, r.avatar as receiver_avatar
+            "SELECT m.*, r.name as receiver_name, r.profile_pic as receiver_avatar
              FROM messages m
              LEFT JOIN users r ON m.recipient_id = r.id
              WHERE m.sender_id = :user_id AND m.parent_id IS NULL
@@ -89,7 +89,7 @@ switch ($filter) {
         
     default: // inbox
         $messages = $db->fetchAll(
-            "SELECT m.*, s.name as sender_name, s.avatar as sender_avatar
+            "SELECT m.*, s.name as sender_name, s.profile_pic as sender_avatar
              FROM messages m
              LEFT JOIN users s ON m.sender_id = s.id
              WHERE m.recipient_id = :user_id AND m.status != 'archived'
@@ -104,7 +104,7 @@ $viewMessage = null;
 $replies = [];
 if (isset($_GET['view'])) {
     $viewMessage = $db->fetchOne(
-        "SELECT m.*, s.name as sender_name, s.email as sender_email, s.avatar as sender_avatar
+        "SELECT m.*, s.name as sender_name, s.email as sender_email, s.profile_pic as sender_avatar
          FROM messages m
          LEFT JOIN users s ON m.sender_id = s.id
          WHERE m.id = :id AND (m.recipient_id = :user_id OR m.sender_id = :user_id)",
@@ -117,7 +117,7 @@ if (isset($_GET['view'])) {
     
     if ($viewMessage) {
         $replies = $db->fetchAll(
-            "SELECT m.*, s.name as sender_name, s.avatar as sender_avatar
+            "SELECT m.*, s.name as sender_name, s.profile_pic as sender_avatar
              FROM messages m
              LEFT JOIN users s ON m.sender_id = s.id
              WHERE m.parent_id = :parent_id
@@ -145,7 +145,7 @@ $stats = [
 
 // Get users for compose
 $users = $db->fetchAll(
-    "SELECT id, name, avatar FROM users WHERE id != :id AND status = 'active' ORDER BY name",
+    "SELECT id, name, profile_pic FROM users WHERE id != :id AND status = 'active' ORDER BY name",
     ['id' => $userId]
 );
 
@@ -285,7 +285,7 @@ $showCompose = isset($_GET['compose']);
                         
                         <div>
                             <label class="block text-sm font-medium text-slate-300 mb-2">To</label>
-                            <select name="receiver_id" required class="form-input w-full px-4 py-3 rounded-lg text-white">
+                            <select name="recipient_id" required class="form-input w-full px-4 py-3 rounded-lg text-white">
                                 <option value="">Select recipient...</option>
                                 <?php foreach ($users as $u): ?>
                                 <option value="<?= $u['id'] ?>"><?= htmlspecialchars($u['name']) ?></option>
@@ -335,7 +335,7 @@ $showCompose = isset($_GET['compose']);
                         
                         <div class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-800">
                             <?php if ($viewMessage['sender_avatar']): ?>
-                            <img src="../uploads/avatars/<?= htmlspecialchars($viewMessage['sender_avatar']) ?>" alt="" class="w-12 h-12 rounded-full object-cover">
+                            <img src="../uploads/profiles/<?= htmlspecialchars($viewMessage['sender_avatar']) ?>" alt="" class="w-12 h-12 rounded-full object-cover">
                             <?php else: ?>
                             <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
                                 <span class="text-accent font-bold text-lg"><?= strtoupper(substr($viewMessage['sender_name'] ?? 'U', 0, 1)) ?></span>
@@ -357,7 +357,7 @@ $showCompose = isset($_GET['compose']);
                                 <div class="bg-slate-800/50 rounded-lg p-4">
                                     <div class="flex items-center gap-3 mb-3">
                                         <?php if ($reply['sender_avatar']): ?>
-                                        <img src="../uploads/avatars/<?= htmlspecialchars($reply['sender_avatar']) ?>" alt="" class="w-8 h-8 rounded-full object-cover">
+                                        <img src="../uploads/profiles/<?= htmlspecialchars($reply['sender_avatar']) ?>" alt="" class="w-8 h-8 rounded-full object-cover">
                                         <?php else: ?>
                                         <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
                                             <span class="text-accent font-bold text-sm"><?= strtoupper(substr($reply['sender_name'] ?? 'U', 0, 1)) ?></span>
@@ -401,13 +401,13 @@ $showCompose = isset($_GET['compose']);
                 <div class="member-card rounded-lg overflow-hidden">
                     <div class="divide-y divide-slate-800">
                         <?php foreach ($messages as $msg): ?>
-                        <a href="?view=<?= $msg['id'] ?>&filter=<?= $filter ?>" class="message-row <?= !$msg['is_read'] && $filter === 'inbox' ? 'unread' : '' ?> flex items-center gap-4 px-4 py-3 block">
+                        <a href="?view=<?= $msg['id'] ?>&filter=<?= $filter ?>" class="message-row <?= $msg['status'] === 'unread' && $filter === 'inbox' ? 'unread' : '' ?> flex items-center gap-4 px-4 py-3 block">
                             <?php 
                             $avatar = $filter === 'sent' ? $msg['receiver_avatar'] : $msg['sender_avatar'];
                             $name = $filter === 'sent' ? $msg['receiver_name'] : $msg['sender_name'];
                             ?>
                             <?php if ($avatar): ?>
-                            <img src="../uploads/avatars/<?= htmlspecialchars($avatar) ?>" alt="" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                            <img src="../uploads/profiles/<?= htmlspecialchars($avatar) ?>" alt="" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
                             <?php else: ?>
                             <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
                                 <span class="text-accent font-bold"><?= strtoupper(substr($name ?? 'U', 0, 1)) ?></span>
@@ -416,11 +416,11 @@ $showCompose = isset($_GET['compose']);
                             
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-white font-medium <?= !$msg['is_read'] && $filter === 'inbox' ? 'font-bold' : '' ?>">
+                                    <span class="text-white font-medium <?= $msg['status'] === 'unread' && $filter === 'inbox' ? 'font-bold' : '' ?>">
                                         <?= htmlspecialchars($name ?? 'Unknown') ?>
                                     </span>
                                 </div>
-                                <div class="text-slate-300 truncate <?= !$msg['is_read'] && $filter === 'inbox' ? 'font-medium' : '' ?>">
+                                <div class="text-slate-300 truncate <?= $msg['status'] === 'unread' && $filter === 'inbox' ? 'font-medium' : '' ?>">
                                     <?= htmlspecialchars($msg['subject']) ?>
                                 </div>
                                 <div class="text-slate-400 text-sm truncate">
