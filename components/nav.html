@@ -33,17 +33,17 @@
     </nav>
 
     <!-- Mobile Navigation -->
-    <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-4 right-4 bg-black/95 backdrop-blur-xl rounded-3xl border border-gray-800/50 shadow-2xl overflow-hidden">
-        <div class="px-6 py-4 flex flex-col space-y-4">
-            <a href="../index.html" class="text-gray-300 hover:text-[#00d4f5] transition-colors font-medium">Home</a>
-            <a href="about.html" class="text-gray-300 hover:text-[#00d4f5] transition-colors font-medium">About</a>
-            <a href="team.html" class="text-gray-300 hover:text-[#00d4f5] transition-colors font-medium">Team</a>
-            <a href="events.html" class="text-gray-300 hover:text-[#00d4f5] transition-colors font-medium relative inline-flex items-center">
+    <div id="mobile-menu" class="enhanced-nav hidden md:hidden absolute top-24 left-4 right-4 rounded-3xl overflow-hidden transform transition-all duration-300 origin-top scale-95 opacity-0">
+        <div class="px-6 py-6 flex flex-col space-y-2">
+            <a href="index.html" class="nav-link-mobile pl-2 border-l-2 border-transparent hover:border-[#00d4f5] hover:bg-white/5">Home</a>
+            <a href="pages/about.html" class="nav-link-mobile pl-2 border-l-2 border-transparent hover:border-[#00d4f5] hover:bg-white/5">About</a>
+            <a href="pages/team.html" class="nav-link-mobile pl-2 border-l-2 border-transparent hover:border-[#00d4f5] hover:bg-white/5">Team</a>
+            <a href="pages/events.html" class="nav-link-mobile pl-2 border-l-2 border-transparent hover:border-[#00d4f5] hover:bg-white/5 flex items-center justify-between">
                 Events
-                <span class="ml-2 bg-[#00d4f5] text-black text-xs font-bold px-2 py-0.5 rounded">3</span>
+                <span class="bg-[#00d4f5]/20 text-[#00d4f5] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#00d4f5]/50">3 NEW</span>
             </a>
-            <a href="gallery.html" class="text-gray-300 hover:text-[#00d4f5] transition-colors font-medium">Gallery</a>
-            <a href="join.html" class="text-[#00d4f5] font-medium">Join Us</a>
+            <a href="pages/gallery.html" class="nav-link-mobile pl-2 border-l-2 border-transparent hover:border-[#00d4f5] hover:bg-white/5">Gallery</a>
+            <a href="pages/join.html" class="mt-4 text-center bg-gradient-to-r from-[#00f5d4] to-[#00b4d8] text-[#0a192f] font-bold py-3 rounded-xl shadow-lg shadow-[#00f5d4]/20 hover:shadow-[#00f5d4]/40 transition-all">Join Us Now</a>
         </div>
     </div>
 </header>
