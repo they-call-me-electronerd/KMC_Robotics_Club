@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050a14" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/png" href="../assets/images/kmc-rc-logo.png">
+    <link rel="apple-touch-icon" href="../assets/images/kmc-rc-logo.png">
+    <title>Events | KMC Robotics Club</title>
+    <meta name="description" content="Discover upcoming workshops, hackathons, competitions, and past events hosted by KMC Robotics Club.">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    
+    <style>
+        body { background-color: #050a14; margin: 0; }
+    </style>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-navy': '#050a14',
+                        'light-navy': '#0f1a2e',
+                        'slate': '#94a3b8',
+                        'light-slate': '#e2e8f0',
+                        'accent': '#00f2ff',
+                        'accent-glow': 'rgba(0, 242, 255, 0.2)',
+                        'secondary-accent': '#7000ff',
+                    },
+                    fontFamily: {
+                        'sci': ['Orbitron', 'sans-serif'],
+                        'tech': ['Rajdhani', 'sans-serif'],
+                        'mono': ['Roboto Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/club-styles.css">
+    <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body class="antialiased">
+    <canvas id="particle-canvas"></canvas>
+    
+    <div class="shape-blob one"></div>
+    <div class="shape-blob two"></div>
+    <div class="shape-blob three"></div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+
+    <main>
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="page-header-content" data-aos="fade-up">
+                <h1 class="page-title">Events</h1>
+                <p class="page-subtitle">Join our workshops, hackathons, and competitions. Learn, build, and innovate with us</p>
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="../index.html">Home</a>
+                    <span>/</span>
+                    <span>Events</span>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Events Section -->
+        <section class="section-spacing">
+            <div class="container mx-auto px-4 md:px-6">
+                
+                <!-- Filter Tabs -->
+                <div class="events-filter" data-aos="fade-up">
+                    <button class="filter-btn active" data-filter="all">All Events</button>
+                    <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+                    <button class="filter-btn" data-filter="past">Past Events</button>
+                    <button class="filter-btn" data-filter="workshop">Workshops</button>
+                    <button class="filter-btn" data-filter="competition">Competitions</button>
+                </div>
+
+                <!-- Events Timeline -->
+                <div class="events-timeline">
+                    
+                    <!-- Upcoming Event 1 -->
+                    <div class="event-item" data-category="upcoming workshop" data-aos="fade-up">
+                        <div class="event-date-badge">
+                            <div class="event-date-day">25</div>
+                            <div class="event-date-month">Jan</div>
+                            <div class="event-date-year">2026</div>
+                        </div>
+                        <div class="event-content">
+                            <span class="event-badge">Upcoming</span>
+                            <h3 class="event-title">Introduction to Arduino & Embedded Systems</h3>
+                            <p class="event-description">
+                                A hands-on workshop for beginners to learn the fundamentals of microcontrollers, sensors, and basic circuit design. Build your first IoT project!
+                            </p>
+                            <div class="event-meta">
+                                <div class="event-meta-item">
+                                    <i data-feather="clock"></i>
+                                    <span>2:00 PM - 5:00 PM</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="map-pin"></i>
+                                    <span>Computer Lab 3, KMC</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="users"></i>
+                                    <span>30 Seats Available</span>
+                                </div>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=400&fit=crop" alt="Arduino Workshop" class="event-image" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Event 2 -->
+                    <div class="event-item" data-category="upcoming competition" data-aos="fade-up">
+                        <div class="event-date-badge">
+                            <div class="event-date-day">15</div>
+                            <div class="event-date-month">Feb</div>
+                            <div class="event-date-year">2026</div>
+                        </div>
+                        <div class="event-content">
+                            <span class="event-badge">Upcoming</span>
+                            <h3 class="event-title">RoboWars 2026 - Inter-College Competition</h3>
+                            <p class="event-description">
+                                The ultimate battle of autonomous robots! Teams compete in maze solving, line following, and sumo wrestling challenges. Cash prizes worth NPR 50,000!
+                            </p>
+                            <div class="event-meta">
+                                <div class="event-meta-item">
+                                    <i data-feather="clock"></i>
+                                    <span>9:00 AM - 6:00 PM</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="map-pin"></i>
+                                    <span>KMC Main Auditorium</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="award"></i>
+                                    <span>NPR 50,000 Prize Pool</span>
+                                </div>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=400&fit=crop" alt="RoboWars Competition" class="event-image" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Event 3 -->
+                    <div class="event-item" data-category="upcoming workshop" data-aos="fade-up">
+                        <div class="event-date-badge">
+                            <div class="event-date-day">28</div>
+                            <div class="event-date-month">Feb</div>
+                            <div class="event-date-year">2026</div>
+                        </div>
+                        <div class="event-content">
+                            <span class="event-badge">Upcoming</span>
+                            <h3 class="event-title">AI & Computer Vision Bootcamp</h3>
+                            <p class="event-description">
+                                3-day intensive bootcamp covering Python, TensorFlow, and OpenCV. Build real-time object detection and face recognition systems from scratch.
+                            </p>
+                            <div class="event-meta">
+                                <div class="event-meta-item">
+                                    <i data-feather="calendar"></i>
+                                    <span>Feb 28 - Mar 2</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="map-pin"></i>
+                                    <span>Robotics Lab, KMC</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="users"></i>
+                                    <span>25 Seats Available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Past Event 1 -->
+                    <div class="event-item" data-category="past workshop" data-aos="fade-up">
+                        <div class="event-date-badge">
+                            <div class="event-date-day">10</div>
+                            <div class="event-date-month">Dec</div>
+                            <div class="event-date-year">2025</div>
+                        </div>
+                        <div class="event-content">
+                            <span class="event-badge past">Completed</span>
+                            <h3 class="event-title">3D Printing & CAD Design Workshop</h3>
+                            <p class="event-description">
+                                Participants learned Fusion 360 basics and designed their first 3D printable robot parts. 25 students successfully completed the workshop.
+                            </p>
+                            <div class="event-meta">
+                                <div class="event-meta-item">
+                                    <i data-feather="users"></i>
+                                    <span>25 Participants</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="check-circle"></i>
+                                    <span>Successfully Completed</span>
+                                </div>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=400&fit=crop" alt="3D Printing Workshop" class="event-image" loading="lazy">
+                        </div>
+                    </div>
+
+                    <!-- Past Event 2 -->
+                    <div class="event-item" data-category="past competition" data-aos="fade-up">
+                        <div class="event-date-badge">
+                            <div class="event-date-day">20</div>
+                            <div class="event-date-month">Nov</div>
+                            <div class="event-date-year">2025</div>
+                        </div>
+                        <div class="event-content">
+                            <span class="event-badge past">Completed</span>
+                            <h3 class="event-title">National Robotics Olympiad - Participation</h3>
+                            <p class="event-description">
+                                KMC RC team participated in the National Robotics Olympiad, securing 2nd place in the autonomous navigation category. Proud moment for our club!
+                            </p>
+                            <div class="event-meta">
+                                <div class="event-meta-item">
+                                    <i data-feather="award"></i>
+                                    <span>2nd Place Winner</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="map-pin"></i>
+                                    <span>Kathmandu, Nepal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Past Event 3 -->
+                    <div class="event-item" data-category="past workshop" data-aos="fade-up">
+                        <div class="event-date-badge">
+                            <div class="event-date-day">05</div>
+                            <div class="event-date-month">Oct</div>
+                            <div class="event-date-year">2025</div>
+                        </div>
+                        <div class="event-content">
+                            <span class="event-badge past">Completed</span>
+                            <h3 class="event-title">Python for Robotics - Beginner Series</h3>
+                            <p class="event-description">
+                                4-week Python programming series covering basics to advanced concepts like OOP, libraries, and automation scripts for robotics applications.
+                            </p>
+                            <div class="event-meta">
+                                <div class="event-meta-item">
+                                    <i data-feather="users"></i>
+                                    <span>40 Participants</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="book"></i>
+                                    <span>4-Week Course</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Past Event 4 -->
+                    <div class="event-item" data-category="past workshop" data-aos="fade-up">
+                        <div class="event-date-badge">
+                            <div class="event-date-day">15</div>
+                            <div class="event-date-month">Sep</div>
+                            <div class="event-date-year">2025</div>
+                        </div>
+                        <div class="event-content">
+                            <span class="event-badge past">Completed</span>
+                            <h3 class="event-title">Drone Building Workshop</h3>
+                            <p class="event-description">
+                                Hands-on session where participants assembled and programmed their own mini quadcopters. Flight testing was the highlight of the day!
+                            </p>
+                            <div class="event-meta">
+                                <div class="event-meta-item">
+                                    <i data-feather="users"></i>
+                                    <span>15 Participants</span>
+                                </div>
+                                <div class="event-meta-item">
+                                    <i data-feather="box"></i>
+                                    <span>Kits Provided</span>
+                                </div>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&h=400&fit=crop" alt="Drone Workshop" class="event-image" loading="lazy">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- No Events Message (Hidden by default) -->
+                <div id="no-events" class="hidden text-center py-12">
+                    <div class="mission-icon mx-auto mb-4" style="width: 80px; height: 80px;">
+                        <i data-feather="calendar" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="font-rajdhani text-xl text-white mb-2">No Events Found</h3>
+                    <p class="text-slate">There are no events matching your current filter.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter CTA -->
+        <section class="section-spacing bg-[rgba(15,26,46,0.3)]">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
+                    <div class="mission-card">
+                        <h2 class="font-orbitron text-2xl md:text-3xl font-bold text-white mb-4">
+                            Never Miss an Event
+                        </h2>
+                        <p class="text-slate mb-8">
+                            Subscribe to our newsletter and get notified about upcoming workshops, competitions, and exclusive club activities.
+                        </p>
+                        <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" id="newsletter-form">
+                            <input type="email" placeholder="Enter your email" class="form-input flex-1" required>
+                            <button type="submit" class="cta-primary whitespace-nowrap">
+                                <i data-feather="bell" class="w-5 h-5"></i>
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-top" aria-label="Scroll to top">
+        <i data-feather="chevron-up" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        // Event Filter Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const eventItems = document.querySelectorAll('.event-item');
+            const noEventsMsg = document.getElementById('no-events');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active state
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filter = this.getAttribute('data-filter');
+                    let visibleCount = 0;
+
+                    eventItems.forEach(item => {
+                        const categories = item.getAttribute('data-category');
+                        
+                        if (filter === 'all' || categories.includes(filter)) {
+                            item.classList.remove('hidden');
+                            item.style.display = '';
+                            visibleCount++;
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+
+                    // Show/hide no events message
+                    if (visibleCount === 0) {
+                        noEventsMsg.classList.remove('hidden');
+                    } else {
+                        noEventsMsg.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Newsletter form
+            const newsletterForm = document.getElementById('newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for subscribing! You will receive updates about our events.');
+                    this.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
