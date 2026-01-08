@@ -24,17 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             case 'reply':
                 $originalMessage = $db->fetchOne("SELECT * FROM messages WHERE id = :id", ['id' => $_POST['message_id']]);
                 if ($originalMessage) {
-                    // Mark original as read
-                    $db->update('messages', ['is_read' => 1], 'id = :id', ['id' => $_POST['message_id']]);
+                    // Mark original as read/replied
+                    $db->update('messages', ['status' => 'replied'], 'id = :id', ['id' => $_POST['message_id']]);
                     
                     // Create reply
                     $replyData = [
                         'sender_id' => Security::getCurrentUserId(),
-                        'receiver_id' => $originalMessage['sender_id'],
+                        'recipient_id' => $originalMessage['sender_id'],
                         'subject' => 'Re: ' . $originalMessage['subject'],
                         'message' => Security::cleanHtml($_POST['reply_message']),
-                        'parent_id' => $originalMessage['id'],
-                        'message_type' => 'reply'
+                        'parent_id' => $originalMessage['id']
                     ];
                     
                     $db->insert('messages', $replyData);
@@ -43,17 +42,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
                 
             case 'mark-read':
-                $db->update('messages', ['is_read' => 1], 'id = :id', ['id' => $_POST['id']]);
+                $db->update('messages', ['status' => 'read', 'read_at' => date('Y-m-d H:i:s')], 'id = :id', ['id' => $_POST['id']]);
                 $message = 'Marked as read';
                 break;
                 
             case 'mark-unread':
-                $db->update('messages', ['is_read' => 0], 'id = :id', ['id' => $_POST['id']]);
+                $db->update('messages', ['status' => 'unread'], 'id = :id', ['id' => $_POST['id']]);
                 $message = 'Marked as unread';
                 break;
                 
             case 'archive':
-                $db->update('messages', ['is_archived' => 1], 'id = :id', ['id' => $_POST['id']]);
+                $db->update('messages', ['status' => 'archived'], 'id = :id', ['id' => $_POST['id']]);
                 $message = 'Message archived';
                 break;
                 
@@ -69,13 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     foreach ($_POST['selected'] as $id) {
                         switch ($bulkAction) {
                             case 'mark-read':
-                                $db->update('messages', ['is_read' => 1], 'id = :id', ['id' => $id]);
+                                $db->update('messages', ['status' => 'read', 'read_at' => date('Y-m-d H:i:s')], 'id = :id', ['id' => $id]);
                                 break;
                             case 'mark-unread':
-                                $db->update('messages', ['is_read' => 0], 'id = :id', ['id' => $id]);
+                                $db->update('messages', ['status' => 'unread'], 'id = :id', ['id' => $id]);
                                 break;
                             case 'archive':
-                                $db->update('messages', ['is_archived' => 1], 'id = :id', ['id' => $id]);
+                                $db->update('messages', ['status' => 'archived'], 'id = :id', ['id' => $id]);
                                 break;
                             case 'delete':
                                 $db->delete('messages', 'id = :id', ['id' => $id]);
@@ -95,28 +94,28 @@ $page = max(1, (int)($_GET['page'] ?? 1));
 $limit = 20;
 $offset = ($page - 1) * $limit;
 
-$where = 'receiver_id IS NULL OR receiver_id = :admin_id'; // Contact form messages or messages to admin
+$where = 'recipient_id IS NULL OR recipient_id = :admin_id'; // Contact form messages or messages to admin
 $params = ['admin_id' => Security::getCurrentUserId()];
 
 $filter = $_GET['filter'] ?? 'inbox';
 
 switch ($filter) {
     case 'unread':
-        $where .= ' AND is_read = 0 AND is_archived = 0';
+        $where .= " AND status = 'unread'";
         break;
     case 'contact':
-        $where = "message_type = 'contact'";
+        $where = "is_from_guest = 1";
         $params = [];
         break;
     case 'archived':
-        $where .= ' AND is_archived = 1';
+        $where .= " AND status = 'archived'";
         break;
     case 'sent':
         $where = 'sender_id = :sender_id';
         $params = ['sender_id' => Security::getCurrentUserId()];
         break;
     default: // inbox
-        $where .= ' AND is_archived = 0';
+        $where .= " AND status != 'archived'";
         break;
 }
 
@@ -131,7 +130,7 @@ $messages = $db->fetchAll(
             r.name as receiver_name
      FROM messages m
      LEFT JOIN users s ON m.sender_id = s.id
-     LEFT JOIN users r ON m.receiver_id = r.id
+     LEFT JOIN users r ON m.recipient_id = r.id
      WHERE {$where}
      ORDER BY m.created_at DESC
      LIMIT {$limit} OFFSET {$offset}",
@@ -150,8 +149,8 @@ if (isset($_GET['view'])) {
         ['id' => $_GET['view']]
     );
     
-    if ($viewMessage && !$viewMessage['is_read']) {
-        $db->update('messages', ['is_read' => 1], 'id = :id', ['id' => $_GET['view']]);
+    if ($viewMessage && $viewMessage['status'] == 'unread') {
+        $db->update('messages', ['status' => 'read', 'read_at' => date('Y-m-d H:i:s')], 'id = :id', ['id' => $_GET['view']]);
     }
     
     // Get replies
@@ -169,9 +168,9 @@ if (isset($_GET['view'])) {
 
 // Stats
 $stats = [
-    'total' => $db->fetchOne("SELECT COUNT(*) as c FROM messages WHERE receiver_id IS NULL OR receiver_id = :id", ['id' => Security::getCurrentUserId()])['c'],
-    'unread' => $db->fetchOne("SELECT COUNT(*) as c FROM messages WHERE (receiver_id IS NULL OR receiver_id = :id) AND is_read = 0 AND is_archived = 0", ['id' => Security::getCurrentUserId()])['c'],
-    'contact' => $db->fetchOne("SELECT COUNT(*) as c FROM messages WHERE message_type = 'contact' AND is_read = 0")['c']
+    'total' => $db->fetchOne("SELECT COUNT(*) as c FROM messages WHERE recipient_id IS NULL OR recipient_id = :id", ['id' => Security::getCurrentUserId()])['c'],
+    'unread' => $db->fetchOne("SELECT COUNT(*) as c FROM messages WHERE (recipient_id IS NULL OR recipient_id = :id) AND status = 'unread'", ['id' => Security::getCurrentUserId()])['c'],
+    'contact' => $db->fetchOne("SELECT COUNT(*) as c FROM messages WHERE is_from_guest = 1 AND status = 'unread'")['c']
 ];
 
 $csrfToken = Security::generateCSRFToken();
