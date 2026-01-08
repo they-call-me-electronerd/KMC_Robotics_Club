@@ -45,6 +45,31 @@ function loadNavigation() {
         .catch(error => console.error('Error loading navigation:', error));
 }
 
+// Load footer component
+function loadFooter() {
+    const footerPlaceholder = document.getElementById('footer-placeholder');
+    if (!footerPlaceholder) return;
+    
+    // Determine the correct path
+    const isRootPage = window.location.pathname.endsWith('index.html') || 
+                       window.location.pathname.endsWith('/') ||
+                       !window.location.pathname.includes('/pages/');
+    const footerPath = isRootPage ? 'components/footer.html' : '../components/footer.html';
+    
+    fetch(footerPath)
+        .then(response => response.text())
+        .then(html => {
+            footerPlaceholder.innerHTML = html;
+            if (window.feather && typeof window.feather.replace === 'function') {
+                window.feather.replace();
+            }
+             if (document.getElementById('year')) {
+                document.getElementById('year').textContent = new Date().getFullYear();
+            }
+        })
+        .catch(error => console.error('Error loading footer:', error));
+}
+
 // Initialize mobile menu
 function initializeMobileMenu() {
     const mobileBtn = document.getElementById('mobile-menu-button');
@@ -61,6 +86,7 @@ function initializeMobileMenu() {
 
 // Load navigation on page load
 document.addEventListener('DOMContentLoaded', loadNavigation);
+document.addEventListener('DOMContentLoaded', loadFooter);
 
 // Initialize Feather Icons
 if (window.feather && typeof window.feather.replace === 'function') {
