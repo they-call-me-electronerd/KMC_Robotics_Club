@@ -1,6 +1,30 @@
 /* Enhanced Institutional Branding CSS */
 
 /* Navigation Enhancements */
+.enhanced-nav {
+    background: rgba(10, 25, 47, 0.65) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 10px 40px -10px rgba(2, 12, 27, 0.6),
+                0 0 15px rgba(0, 245, 212, 0.1) !important;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.enhanced-nav:hover {
+    border-color: rgba(0, 245, 212, 0.3) !important;
+    box-shadow: 0 15px 50px -10px rgba(2, 12, 27, 0.7),
+                0 0 20px rgba(0, 245, 212, 0.15) !important;
+}
+
+.logo-container {
+    transition: transform 0.3s ease;
+}
+
+.enhanced-nav:hover .logo-container {
+    transform: scale(1.05);
+}
+
 .nav-link {
     position: relative;
     transition: color 0.3s;
