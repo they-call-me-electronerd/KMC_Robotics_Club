@@ -1,19 +1,24 @@
 // Initialize Feather Icons
-feather.replace();
+if (window.feather && typeof window.feather.replace === 'function') {
+    window.feather.replace();
+}
 
 // Initialize AOS animation library
-AOS.init({
-    duration: 800,
-    easing: 'ease-in-out',
-    once: true, /* Change to true for animations to happen only once */
-    mirror: false
-});
+if (window.AOS && typeof window.AOS.init === 'function') {
+    window.AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true, /* Change to true for animations to happen only once */
+        mirror: false
+    });
+}
 
 // Mobile menu toggle
 const mobileBtn = document.getElementById('mobile-menu-button');
 const mobileMenu = document.getElementById('mobile-menu');
 
 function toggleMobileMenu() {
+    if (!mobileMenu) return;
     const isHidden = mobileMenu.classList.contains('hidden');
     
     if (isHidden) {
@@ -33,7 +38,9 @@ function toggleMobileMenu() {
     }
 }
 
-mobileBtn.addEventListener('click', toggleMobileMenu);
+if (mobileBtn) {
+    mobileBtn.addEventListener('click', toggleMobileMenu);
+}
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach((a) => {
@@ -42,16 +49,21 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
         const target = document.querySelector(a.getAttribute('href'));
         if (target) {
             target.scrollIntoView({ behavior: 'smooth' });
-            if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu();
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) toggleMobileMenu();
         }
     });
 });
 
 // Particle animation with increased speed
 const canvas = document.getElementById('particle-canvas');
-const ctx = canvas.getContext('2d');
-const resize = () => ((canvas.width = innerWidth), (canvas.height = innerHeight));
-resize(); window.addEventListener('resize', resize);
+const ctx = canvas ? canvas.getContext('2d') : null;
+const resize = () => {
+    if (!canvas) return;
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+};
+resize();
+window.addEventListener('resize', resize);
 
 class Particle {
     constructor(x, y, dx, dy, size) {
@@ -74,6 +86,7 @@ class Particle {
 
 let particles = [];
 const init = () => {
+    if (!canvas) return;
     particles = [];
     const count = (canvas.width * canvas.height) / 9000;
     for (let i = 0; i < count; i++) {
@@ -88,6 +101,7 @@ const init = () => {
 };
 
 const connect = () => {
+    if (!canvas) return;
     for (let a = 0; a < particles.length; a++) {
         for (let b = a; b < particles.length; b++) {
             const dx = particles[a].x - particles[b].x;
@@ -107,14 +121,17 @@ const connect = () => {
 };
 
 const animate = () => {
+    if (!canvas || !ctx) return;
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     particles.forEach((p) => p.update());
     connect();
 };
 
-init(); 
-animate();
+if (canvas && ctx) {
+    init();
+    animate();
+}
 
 // Typing animation
 const typingText = document.getElementById('typingText');
@@ -122,6 +139,7 @@ const words = ["AI & Robotics Innovator", "Tech Mentor", "Future Engineer"];
 let i = 0, j = 0, currentWord = '', isDeleting = false;
 
 function type() {
+    if (!typingText) return;
     currentWord = words[i];
     if (!isDeleting) {
         typingText.innerHTML = currentWord.slice(0, ++j) + '<span class="cursor"></span>';
@@ -140,7 +158,9 @@ function type() {
     setTimeout(type, isDeleting ? 50 : 100);
 }
 
-type();
+if (typingText) {
+    type();
+}
 
 // Scroll functionality
 window.addEventListener('scroll', function() {
@@ -167,21 +187,27 @@ window.addEventListener('scroll', function() {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
-    document.getElementById("progressBar").style.width = scrolled + "%";
+    const progressBar = document.getElementById('progressBar');
+    if (progressBar) progressBar.style.width = scrolled + "%";
     
     // Scroll to top button
     const scrollBtn = document.getElementById('scrollToTop');
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-        scrollBtn.classList.add('show');
-    } else {
-        scrollBtn.classList.remove('show');
+    if (scrollBtn) {
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            scrollBtn.classList.add('show');
+        } else {
+            scrollBtn.classList.remove('show');
+        }
     }
 });
 
 // Scroll to top functionality
-document.getElementById('scrollToTop').addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+const scrollToTopBtn = document.getElementById('scrollToTop');
+if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
 
 // Project Modal Functionality
 const modalBtns = document.querySelectorAll('[data-modal]');
@@ -219,28 +245,34 @@ modals.forEach(modal => {
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = document.getElementById('themeIcon');
 
-const currentTheme = localStorage.getItem('theme');
-if (currentTheme === 'dark') {
-    document.body.classList.remove('light-mode');
-    themeIcon.setAttribute('data-feather', 'moon');
-} else if (currentTheme === 'light') {
-    document.body.classList.add('light-mode');
-    themeIcon.setAttribute('data-feather', 'sun');
-}
-feather.replace();
-
-themeToggle.addEventListener('click', function() {
-    if (document.body.classList.contains('light-mode')) {
+if (themeToggle && themeIcon) {
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'dark') {
         document.body.classList.remove('light-mode');
-        localStorage.setItem('theme', 'dark');
         themeIcon.setAttribute('data-feather', 'moon');
-    } else {
+    } else if (currentTheme === 'light') {
         document.body.classList.add('light-mode');
-        localStorage.setItem('theme', 'light');
         themeIcon.setAttribute('data-feather', 'sun');
     }
-    feather.replace();
-});
+    if (window.feather && typeof window.feather.replace === 'function') {
+        window.feather.replace();
+    }
+
+    themeToggle.addEventListener('click', function() {
+        if (document.body.classList.contains('light-mode')) {
+            document.body.classList.remove('light-mode');
+            localStorage.setItem('theme', 'dark');
+            themeIcon.setAttribute('data-feather', 'moon');
+        } else {
+            document.body.classList.add('light-mode');
+            localStorage.setItem('theme', 'light');
+            themeIcon.setAttribute('data-feather', 'sun');
+        }
+        if (window.feather && typeof window.feather.replace === 'function') {
+            window.feather.replace();
+        }
+    });
+}
 
 // Enhanced project card interactions
 document.querySelectorAll('.project-card .project-btn').forEach(btn => {
