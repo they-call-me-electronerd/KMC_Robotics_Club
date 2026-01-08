@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050a14" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/png" href="../assets/images/kmc-rc-logo.png">
+    <link rel="apple-touch-icon" href="../assets/images/kmc-rc-logo.png">
+    <title>Join Us | KMC Robotics Club</title>
+    <meta name="description" content="Join KMC Robotics Club and become part of a vibrant community of innovators, builders, and tech enthusiasts.">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    
+    <style>
+        body { background-color: #050a14; margin: 0; }
+    </style>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-navy': '#050a14',
+                        'light-navy': '#0f1a2e',
+                        'slate': '#94a3b8',
+                        'light-slate': '#e2e8f0',
+                        'accent': '#00f2ff',
+                        'accent-glow': 'rgba(0, 242, 255, 0.2)',
+                        'secondary-accent': '#7000ff',
+                    },
+                    fontFamily: {
+                        'sci': ['Orbitron', 'sans-serif'],
+                        'tech': ['Rajdhani', 'sans-serif'],
+                        'mono': ['Roboto Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/club-styles.css">
+    <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body class="antialiased">
+    <canvas id="particle-canvas"></canvas>
+    
+    <div class="shape-blob one"></div>
+    <div class="shape-blob two"></div>
+    <div class="shape-blob three"></div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+
+    <main>
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="page-header-content" data-aos="fade-up">
+                <h1 class="page-title">Join Us</h1>
+                <p class="page-subtitle">Become part of a community that's shaping the future of technology</p>
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="../index.html">Home</a>
+                    <span>/</span>
+                    <span>Join Us</span>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Benefits Section -->
+        <section class="section-spacing">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <span class="inline-block px-4 py-2 bg-[rgba(0,242,255,0.05)] border border-accent/30 rounded text-accent text-sm font-mono tracking-widest uppercase mb-4">
+                        Why Join?
+                    </span>
+                    <h2 class="font-orbitron text-2xl md:text-3xl font-bold text-white">
+                        Benefits of Membership
+                    </h2>
+                </div>
+
+                <div class="join-benefits">
+                    <!-- Benefit 1 -->
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="benefit-icon">
+                            <i data-feather="book-open" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="benefit-title">Learn & Grow</h3>
+                        <p class="benefit-text">Access exclusive workshops, training sessions, and resources on robotics, AI, and emerging technologies.</p>
+                    </div>
+
+                    <!-- Benefit 2 -->
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="benefit-icon">
+                            <i data-feather="users" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="benefit-title">Network</h3>
+                        <p class="benefit-text">Connect with like-minded peers, industry professionals, and mentors who share your passion for technology.</p>
+                    </div>
+
+                    <!-- Benefit 3 -->
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="benefit-icon">
+                            <i data-feather="tool" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="benefit-title">Build Projects</h3>
+                        <p class="benefit-text">Get hands-on experience with cutting-edge equipment, 3D printers, and development kits for your projects.</p>
+                    </div>
+
+                    <!-- Benefit 4 -->
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="benefit-icon">
+                            <i data-feather="award" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="benefit-title">Compete & Win</h3>
+                        <p class="benefit-text">Represent KMC in national and international robotics competitions with team support and resources.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Form Section -->
+        <section class="section-spacing bg-[rgba(15,26,46,0.3)]">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <span class="inline-block px-4 py-2 bg-[rgba(0,242,255,0.05)] border border-accent/30 rounded text-accent text-sm font-mono tracking-widest uppercase mb-4">
+                        Apply Now
+                    </span>
+                    <h2 class="font-orbitron text-2xl md:text-3xl font-bold text-white mb-4">
+                        Membership Application
+                    </h2>
+                    <p class="text-slate max-w-2xl mx-auto">
+                        Fill out the form below to apply for membership. No prior experience required – just bring your enthusiasm and willingness to learn!
+                    </p>
+                </div>
+
+                <div class="join-form-container" data-aos="fade-up" data-aos-delay="100">
+                    <!-- Application Form -->
+                    <form class="join-form" id="membership-form">
+                        
+                        <!-- Personal Information -->
+                        <h3 class="font-orbitron text-lg text-white mb-6 pb-3 border-b border-accent/20">
+                            <i data-feather="user" class="w-5 h-5 inline mr-2 text-accent"></i>
+                            Personal Information
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="form-group">
+                                <label class="form-label" for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Enter your first name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Enter your last name" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+977 98XXXXXXXX" required>
+                            </div>
+                        </div>
+
+                        <!-- Academic Information -->
+                        <h3 class="font-orbitron text-lg text-white mb-6 pb-3 border-b border-accent/20 mt-8">
+                            <i data-feather="book" class="w-5 h-5 inline mr-2 text-accent"></i>
+                            Academic Information
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="form-group">
+                                <label class="form-label" for="program">Program/Faculty *</label>
+                                <select id="program" name="program" class="form-select" required>
+                                    <option value="" disabled selected>Select your program</option>
+                                    <option value="computer-engineering">Computer Engineering</option>
+                                    <option value="electronics-engineering">Electronics Engineering</option>
+                                    <option value="civil-engineering">Civil Engineering</option>
+                                    <option value="bca">BCA</option>
+                                    <option value="bsc-csit">BSc. CSIT</option>
+                                    <option value="bit">BIT</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="year">Current Year *</label>
+                                <select id="year" name="year" class="form-select" required>
+                                    <option value="" disabled selected>Select your year</option>
+                                    <option value="1st">1st Year</option>
+                                    <option value="2nd">2nd Year</option>
+                                    <option value="3rd">3rd Year</option>
+                                    <option value="4th">4th Year</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-6">
+                            <label class="form-label" for="studentId">Student ID / Roll Number</label>
+                            <input type="text" id="studentId" name="studentId" class="form-input" placeholder="Enter your student ID">
+                        </div>
+
+                        <!-- Interests -->
+                        <h3 class="font-orbitron text-lg text-white mb-6 pb-3 border-b border-accent/20 mt-8">
+                            <i data-feather="heart" class="w-5 h-5 inline mr-2 text-accent"></i>
+                            Areas of Interest
+                        </h3>
+
+                        <div class="form-group mb-6">
+                            <label class="form-label">Select all that apply:</label>
+                            <div class="form-checkbox-group">
+                                <label class="form-checkbox">
+                                    <input type="checkbox" name="interests" value="robotics">
+                                    <span class="form-checkbox-mark">
+                                        <i data-feather="check" class="w-3 h-3"></i>
+                                    </span>
+                                    <span class="form-checkbox-text">Robotics</span>
+                                </label>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" name="interests" value="ai-ml">
+                                    <span class="form-checkbox-mark">
+                                        <i data-feather="check" class="w-3 h-3"></i>
+                                    </span>
+                                    <span class="form-checkbox-text">AI & Machine Learning</span>
+                                </label>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" name="interests" value="iot">
+                                    <span class="form-checkbox-mark">
+                                        <i data-feather="check" class="w-3 h-3"></i>
+                                    </span>
+                                    <span class="form-checkbox-text">IoT & Embedded</span>
+                                </label>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" name="interests" value="web-dev">
+                                    <span class="form-checkbox-mark">
+                                        <i data-feather="check" class="w-3 h-3"></i>
+                                    </span>
+                                    <span class="form-checkbox-text">Web Development</span>
+                                </label>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" name="interests" value="3d-printing">
+                                    <span class="form-checkbox-mark">
+                                        <i data-feather="check" class="w-3 h-3"></i>
+                                    </span>
+                                    <span class="form-checkbox-text">3D Design & Printing</span>
+                                </label>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" name="interests" value="drones">
+                                    <span class="form-checkbox-mark">
+                                        <i data-feather="check" class="w-3 h-3"></i>
+                                    </span>
+                                    <span class="form-checkbox-text">Drones & UAVs</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Experience Level -->
+                        <div class="form-group mb-6">
+                            <label class="form-label" for="experience">Technical Experience Level</label>
+                            <select id="experience" name="experience" class="form-select">
+                                <option value="" disabled selected>Select your experience level</option>
+                                <option value="beginner">Beginner - Just getting started</option>
+                                <option value="intermediate">Intermediate - Some project experience</option>
+                                <option value="advanced">Advanced - Multiple projects completed</option>
+                                <option value="expert">Expert - Competition/professional experience</option>
+                            </select>
+                        </div>
+
+                        <!-- Motivation -->
+                        <h3 class="font-orbitron text-lg text-white mb-6 pb-3 border-b border-accent/20 mt-8">
+                            <i data-feather="message-square" class="w-5 h-5 inline mr-2 text-accent"></i>
+                            Tell Us More
+                        </h3>
+
+                        <div class="form-group mb-6">
+                            <label class="form-label" for="motivation">Why do you want to join KMC Robotics Club? *</label>
+                            <textarea id="motivation" name="motivation" class="form-textarea" placeholder="Share your motivation, goals, and what you hope to achieve..." required></textarea>
+                        </div>
+
+                        <div class="form-group mb-6">
+                            <label class="form-label" for="skills">Any specific skills or projects you'd like to mention?</label>
+                            <textarea id="skills" name="skills" class="form-textarea" placeholder="Tell us about your existing skills, projects you've worked on, or competitions you've participated in..."></textarea>
+                        </div>
+
+                        <!-- How did you hear about us -->
+                        <div class="form-group mb-8">
+                            <label class="form-label" for="referral">How did you hear about us?</label>
+                            <select id="referral" name="referral" class="form-select">
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="friend">Friend / Classmate</option>
+                                <option value="social-media">Social Media</option>
+                                <option value="college-notice">College Notice Board</option>
+                                <option value="event">Club Event / Workshop</option>
+                                <option value="teacher">Teacher / Faculty</option>
+                                <option value="website">Website Search</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="submit-btn">
+                            <i data-feather="send" class="w-5 h-5 inline mr-2"></i>
+                            Submit Application
+                        </button>
+
+                        <p class="form-note">
+                            By submitting this form, you agree to our <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.
+                        </p>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div class="form-success" id="form-success">
+                        <div class="success-icon">
+                            <i data-feather="check" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="success-title">Application Submitted!</h3>
+                        <p class="success-text">
+                            Thank you for your interest in joining KMC Robotics Club! We've received your application and will review it shortly. You'll receive a confirmation email within 2-3 business days.
+                        </p>
+                        <a href="../index.html" class="cta-secondary mt-6 inline-flex">
+                            <i data-feather="home" class="w-5 h-5"></i>
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section-spacing">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <span class="inline-block px-4 py-2 bg-[rgba(0,242,255,0.05)] border border-accent/30 rounded text-accent text-sm font-mono tracking-widest uppercase mb-4">
+                        FAQ
+                    </span>
+                    <h2 class="font-orbitron text-2xl md:text-3xl font-bold text-white">
+                        Frequently Asked Questions
+                    </h2>
+                </div>
+
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="mission-card" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="font-rajdhani text-lg font-bold text-white mb-2 flex items-center gap-2">
+                            <i data-feather="help-circle" class="w-5 h-5 text-accent"></i>
+                            Do I need prior experience to join?
+                        </h3>
+                        <p class="text-slate">No! We welcome members of all skill levels. Whether you're a complete beginner or an experienced developer, there's a place for you in our club.</p>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="mission-card" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="font-rajdhani text-lg font-bold text-white mb-2 flex items-center gap-2">
+                            <i data-feather="help-circle" class="w-5 h-5 text-accent"></i>
+                            Is there a membership fee?
+                        </h3>
+                        <p class="text-slate">There's a minimal annual membership fee that covers workshop materials, equipment access, and event participation. The exact amount will be communicated during the onboarding process.</p>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="mission-card" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="font-rajdhani text-lg font-bold text-white mb-2 flex items-center gap-2">
+                            <i data-feather="help-circle" class="w-5 h-5 text-accent"></i>
+                            How much time commitment is required?
+                        </h3>
+                        <p class="text-slate">We recommend dedicating at least 3-4 hours per week for club activities, including meetings, workshops, and project work. However, this is flexible based on your schedule.</p>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="mission-card" data-aos="fade-up" data-aos-delay="400">
+                        <h3 class="font-rajdhani text-lg font-bold text-white mb-2 flex items-center gap-2">
+                            <i data-feather="help-circle" class="w-5 h-5 text-accent"></i>
+                            Can non-KMC students join?
+                        </h3>
+                        <p class="text-slate">Currently, membership is limited to Kathmandu Model College students. However, external participants can attend our open workshops and public events.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="section-spacing bg-[rgba(15,26,46,0.3)]">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
+                    <h2 class="font-orbitron text-2xl md:text-3xl font-bold text-white mb-6">
+                        Still Have Questions?
+                    </h2>
+                    <p class="text-slate mb-8">
+                        Feel free to reach out to us through any of these channels. We're happy to help!
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="mailto:robotics@kmc.edu.np" class="cta-secondary">
+                            <i data-feather="mail" class="w-5 h-5"></i>
+                            Email Us
+                        </a>
+                        <a href="#" class="cta-secondary">
+                            <i data-feather="facebook" class="w-5 h-5"></i>
+                            Facebook
+                        </a>
+                        <a href="#" class="cta-secondary">
+                            <i data-feather="instagram" class="w-5 h-5"></i>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-top" aria-label="Scroll to top">
+        <i data-feather="chevron-up" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        // Form Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('membership-form');
+            const successMessage = document.getElementById('form-success');
+
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Validate form
+                    const requiredFields = form.querySelectorAll('[required]');
+                    let isValid = true;
+
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.style.borderColor = '#ff4444';
+                        } else {
+                            field.style.borderColor = '';
+                        }
+                    });
+
+                    if (!isValid) {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+
+                    // Simulate form submission
+                    const submitBtn = form.querySelector('.submit-btn');
+                    submitBtn.innerHTML = '<i data-feather="loader" class="w-5 h-5 inline mr-2 animate-spin"></i> Submitting...';
+                    submitBtn.disabled = true;
+                    feather.replace();
+
+                    setTimeout(function() {
+                        // Hide form and show success message
+                        form.style.display = 'none';
+                        successMessage.classList.add('show');
+
+                        // Scroll to success message
+                        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                        // Re-initialize feather icons
+                        feather.replace();
+                    }, 2000);
+                });
+
+                // Reset border color on input
+                const inputs = form.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    input.addEventListener('input', function() {
+                        this.style.borderColor = '';
+                    });
+                });
+            }
+
+            // Checkbox styling
+            const checkboxes = document.querySelectorAll('.form-checkbox input');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    feather.replace();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
