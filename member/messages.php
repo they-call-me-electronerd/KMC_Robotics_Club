@@ -34,10 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $db->insert('messages', [
                         'sender_id' => $userId,
-                        'receiver_id' => $receiverId,
+                        'recipient_id' => $receiverId,
                         'subject' => $subject,
-                        'message' => $messageText,
-                        'message_type' => 'message'
+                        'message' => $messageText
                     ]);
                     $message = 'Message sent successfully';
                 }
@@ -51,20 +50,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($parentMessage && !empty($messageText)) {
                     $db->insert('messages', [
                         'sender_id' => $userId,
-                        'receiver_id' => $parentMessage['sender_id'],
+                        'recipient_id' => $parentMessage['sender_id'],
                         'subject' => 'Re: ' . $parentMessage['subject'],
                         'message' => $messageText,
-                        'parent_id' => $parentId,
-                        'message_type' => 'reply'
+                        'parent_id' => $parentId
                     ]);
-                    $db->update('messages', ['is_read' => 1], 'id = :id', ['id' => $parentId]);
+                    $db->update('messages', ['status' => 'replied'], 'id = :id', ['id' => $parentId]);
                     $message = 'Reply sent successfully';
                 }
                 break;
                 
             case 'delete':
                 $msgId = (int)$_POST['message_id'];
-                $db->delete('messages', 'id = :id AND (sender_id = :uid OR receiver_id = :uid)', [
+                $db->delete('messages', 'id = :id AND (sender_id = :uid OR recipient_id = :uid)', [
                     'id' => $msgId,
                     'uid' => $userId
                 ]);
@@ -82,7 +80,7 @@ switch ($filter) {
         $messages = $db->fetchAll(
             "SELECT m.*, r.name as receiver_name, r.avatar as receiver_avatar
              FROM messages m
-             LEFT JOIN users r ON m.receiver_id = r.id
+             LEFT JOIN users r ON m.recipient_id = r.id
              WHERE m.sender_id = :user_id AND m.parent_id IS NULL
              ORDER BY m.created_at DESC",
             ['user_id' => $userId]
@@ -94,7 +92,7 @@ switch ($filter) {
             "SELECT m.*, s.name as sender_name, s.avatar as sender_avatar
              FROM messages m
              LEFT JOIN users s ON m.sender_id = s.id
-             WHERE m.receiver_id = :user_id AND m.is_archived = 0
+             WHERE m.recipient_id = :user_id AND m.status != 'archived'
              ORDER BY m.created_at DESC",
             ['user_id' => $userId]
         );
@@ -109,12 +107,12 @@ if (isset($_GET['view'])) {
         "SELECT m.*, s.name as sender_name, s.email as sender_email, s.avatar as sender_avatar
          FROM messages m
          LEFT JOIN users s ON m.sender_id = s.id
-         WHERE m.id = :id AND (m.receiver_id = :user_id OR m.sender_id = :user_id)",
+         WHERE m.id = :id AND (m.recipient_id = :user_id OR m.sender_id = :user_id)",
         ['id' => $_GET['view'], 'user_id' => $userId]
     );
     
-    if ($viewMessage && !$viewMessage['is_read'] && $viewMessage['receiver_id'] == $userId) {
-        $db->update('messages', ['is_read' => 1], 'id = :id', ['id' => $_GET['view']]);
+    if ($viewMessage && $viewMessage['status'] == 'unread' && $viewMessage['recipient_id'] == $userId) {
+        $db->update('messages', ['status' => 'read', 'read_at' => date('Y-m-d H:i:s')], 'id = :id', ['id' => $_GET['view']]);
     }
     
     if ($viewMessage) {
@@ -132,11 +130,11 @@ if (isset($_GET['view'])) {
 // Stats
 $stats = [
     'inbox' => $db->fetchOne(
-        "SELECT COUNT(*) as c FROM messages WHERE receiver_id = :id AND is_archived = 0",
+        "SELECT COUNT(*) as c FROM messages WHERE recipient_id = :id AND status != 'archived'",
         ['id' => $userId]
     )['c'],
     'unread' => $db->fetchOne(
-        "SELECT COUNT(*) as c FROM messages WHERE receiver_id = :id AND is_read = 0 AND is_archived = 0",
+        "SELECT COUNT(*) as c FROM messages WHERE recipient_id = :id AND status = 'unread'",
         ['id' => $userId]
     )['c'],
     'sent' => $db->fetchOne(
