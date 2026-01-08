@@ -47,6 +47,17 @@
     }
 }
 
+/* Club Name Text - ensure visibility */
+.club-name-text {
+    display: block !important;
+}
+
+@media (max-width: 374px) {
+    .club-name-text {
+        display: none !important;
+    }
+}
+
 @media (min-width: 768px) {
     .enhanced-nav {
         padding-left: 2rem;
