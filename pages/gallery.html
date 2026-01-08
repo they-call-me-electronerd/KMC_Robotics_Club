@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery | Robotics & AI Innovation Club</title>
+    <meta name="description" content="Explore our gallery showcasing memorable moments from projects, events, and workshops">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-navy': '#0a192f',
+                        'light-navy': '#112240',
+                        'slate': '#8892b0',
+                        'light-slate': '#ccd6f6',
+                        'accent': '#00f5d4',
+                        'accent-glow': 'rgba(0, 245, 212, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/club-styles.css">
+    <style>
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover img {
+            filter: brightness(0.7);
+        }
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(10, 25, 47, 0.95), transparent);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            background: #112240;
+            border: 1px solid #233554;
+            color: #8892b0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #00f5d4;
+            color: #0a192f;
+            border-color: #00f5d4;
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 0.5rem;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            background: #112240;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .lightbox-close:hover {
+            background: #00f5d4;
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <canvas id="particle-canvas"></canvas>
+    
+    <div class="shape-blob one"></div>
+    <div class="shape-blob two"></div>
+    <div class="shape-blob three"></div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">
+        <i data-feather="moon" id="themeIcon"></i>
+    </button>
+
+    <!-- Navigation -->
+    <header class="fixed inset-x-0 top-0 z-50 bg-[#0a192f]/95 backdrop-blur-md shadow-lg border-b border-[#233554]">
+        <nav class="container mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00f5d4] to-[#00b4d8] flex items-center justify-center">
+                    <i data-feather="cpu" class="w-6 h-6 text-[#0a192f]"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold font-mono text-[#00f5d4]">R&AI Club</div>
+                    <div class="text-xs text-slate-400 font-mono">Build • Code • Innovate</div>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="../index.html" class="nav-link font-mono">Home</a>
+                <a href="about.html" class="nav-link font-mono">About Us</a>
+                <a href="team.html" class="nav-link font-mono">Team</a>
+                <a href="projects.html" class="nav-link font-mono">Projects</a>
+                <a href="events.html" class="nav-link font-mono">Events</a>
+                <a href="gallery.html" class="nav-link font-mono active">Gallery</a>
+                <a href="join.html" class="nav-link font-mono btn-join">Join Us</a>
+            </div>
+
+            <button id="mobile-menu-button" class="md:hidden text-[#00f5d4]">
+                <i data-feather="menu" class="w-6 h-6"></i>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#112240] border-t border-[#233554]">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="../index.html" class="nav-link-mobile font-mono">Home</a>
+                <a href="about.html" class="nav-link-mobile font-mono">About Us</a>
+                <a href="team.html" class="nav-link-mobile font-mono">Team</a>
+                <a href="projects.html" class="nav-link-mobile font-mono">Projects</a>
+                <a href="events.html" class="nav-link-mobile font-mono">Events</a>
+                <a href="gallery.html" class="nav-link-mobile font-mono text-[#00f5d4]">Gallery</a>
+                <a href="join.html" class="nav-link-mobile font-mono">Join Us</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[50vh] flex items-center justify-center pt-32 pb-20 overflow-hidden">
+        <div class="container mx-auto px-6 text-center z-10">
+            <div data-aos="fade-up" data-aos-duration="1000">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-[#00f5d4] to-[#00b4d8] bg-clip-text text-transparent font-mono">
+                        Gallery
+                    </span>
+                </h1>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto font-mono">
+                    Capturing moments of innovation, collaboration, and creativity
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="py-8 bg-[#0a192f]/50">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up">
+                <button class="filter-btn active font-mono" data-filter="all">All</button>
+                <button class="filter-btn font-mono" data-filter="projects">Projects</button>
+                <button class="filter-btn font-mono" data-filter="events">Events</button>
+                <button class="filter-btn font-mono" data-filter="workshops">Workshops</button>
+                <button class="filter-btn font-mono" data-filter="team">Team</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+                
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item" data-category="projects" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&auto=format&fit=crop" alt="AI Project Development">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">AI Project Development</h3>
+                        <p class="text-slate-400 text-sm">Building intelligent systems</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop" alt="Tech Conference">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">Annual Tech Conference</h3>
+                        <p class="text-slate-400 text-sm">Knowledge sharing event</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item" data-category="workshops" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=800&auto=format&fit=crop" alt="Robotics Workshop">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">Robotics Workshop</h3>
+                        <p class="text-slate-400 text-sm">Hands-on learning session</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item" data-category="team" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop" alt="Team Meeting">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">Team Collaboration</h3>
+                        <p class="text-slate-400 text-sm">Working together on solutions</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item" data-category="projects" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop" alt="Hardware Project">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">Hardware Development</h3>
+                        <p class="text-slate-400 text-sm">Building physical systems</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 -->
+                <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&auto=format&fit=crop" alt="Competition">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">Robotics Competition</h3>
+                        <p class="text-slate-400 text-sm">Showcasing our innovations</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 7 -->
+                <div class="gallery-item" data-category="workshops" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop" alt="Coding Workshop">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">Coding Workshop</h3>
+                        <p class="text-slate-400 text-sm">Learning programming fundamentals</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 8 -->
+                <div class="gallery-item" data-category="projects" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop" alt="3D Printing">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">3D Printing Lab</h3>
+                        <p class="text-slate-400 text-sm">Rapid prototyping</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 9 -->
+                <div class="gallery-item" data-category="team" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&auto=format&fit=crop" alt="Team Building">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">Team Building Activity</h3>
+                        <p class="text-slate-400 text-sm">Strengthening our bonds</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 10 -->
+                <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop" alt="Hackathon">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">24-Hour Hackathon</h3>
+                        <p class="text-slate-400 text-sm">Innovation marathon</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 11 -->
+                <div class="gallery-item" data-category="workshops" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&auto=format&fit=crop" alt="ML Workshop">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">Machine Learning Workshop</h3>
+                        <p class="text-slate-400 text-sm">Deep learning fundamentals</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 12 -->
+                <div class="gallery-item" data-category="projects" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&auto=format&fit=crop" alt="Drone Project">
+                    <div class="gallery-overlay">
+                        <h3 class="text-[#00f5d4] font-mono font-semibold text-lg mb-1">Autonomous Drone Project</h3>
+                        <p class="text-slate-400 text-sm">Flight control systems</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-close" onclick="closeLightbox()">
+            <i data-feather="x" class="text-[#00f5d4]"></i>
+        </div>
+        <img id="lightbox-img" src="" alt="Gallery Image">
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative py-16 text-center bg-[#0a192f]/95 border-t border-[#233554] overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="mb-8">
+                <h3 class="font-mono text-2xl font-bold text-[#00f5d4] mb-2">Robotics & AI Innovation Club</h3>
+                <p class="text-slate-400 font-mono text-sm">Building the Future, One Innovation at a Time</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-8 text-left md:text-center">
+                <div>
+                    <h4 class="text-[#00f5d4] font-semibold mb-3 font-mono">Club</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="about.html" class="hover:text-[#00f5d4] transition-colors">About Us</a></li>
+                        <li><a href="team.html" class="hover:text-[#00f5d4] transition-colors">Our Team</a></li>
+                        <li><a href="join.html" class="hover:text-[#00f5d4] transition-colors">Join Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[#00f5d4] font-semibold mb-3 font-mono">Activities</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="projects.html" class="hover:text-[#00f5d4] transition-colors">Projects</a></li>
+                        <li><a href="events.html" class="hover:text-[#00f5d4] transition-colors">Events</a></li>
+                        <li><a href="gallery.html" class="hover:text-[#00f5d4] transition-colors">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[#00f5d4] font-semibold mb-3 font-mono">Resources</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[#00f5d4] font-semibold mb-3 font-mono">Connect</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="contact.html" class="hover:text-[#00f5d4] transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Newsletter</a></li>
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Sponsors</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-[#112240] border border-[#233554] flex items-center justify-center hover:border-[#00f5d4] hover:bg-[#00f5d4]/10 transition-all">
+                    <i data-feather="facebook" class="w-5 h-5 text-slate-400"></i>
+                </a>
+                <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-[#112240] border border-[#233554] flex items-center justify-center hover:border-[#00f5d4] hover:bg-[#00f5d4]/10 transition-all">
+                    <i data-feather="instagram" class="w-5 h-5 text-slate-400"></i>
+                </a>
+                <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-[#112240] border border-[#233554] flex items-center justify-center hover:border-[#00f5d4] hover:bg-[#00f5d4]/10 transition-all">
+                    <i data-feather="linkedin" class="w-5 h-5 text-slate-400"></i>
+                </a>
+                <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-[#112240] border border-[#233554] flex items-center justify-center hover:border-[#00f5d4] hover:bg-[#00f5d4]/10 transition-all">
+                    <i data-feather="github" class="w-5 h-5 text-slate-400"></i>
+                </a>
+            </div>
+
+            <div class="text-slate-500 text-sm font-mono">
+                <p>&copy; 2026 Robotics & AI Innovation Club. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Gallery Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+                
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter gallery items
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                lightboxImg.src = imgSrc;
+                lightbox.classList.add('active');
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        // Close lightbox on background click
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Close lightbox on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.setAttribute('data-feather', 'sun');
+            } else {
+                themeIcon.setAttribute('data-feather', 'moon');
+            }
+            feather.replace();
+        });
+
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        });
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
