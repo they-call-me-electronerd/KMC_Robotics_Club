@@ -60,6 +60,7 @@ const mobileBtn = document.getElementById('mobile-menu-button');
 const mobileMenu = document.getElementById('mobile-menu');
 
 function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
     if (!mobileMenu) return;
     const isHidden = mobileMenu.classList.contains('hidden');
     
