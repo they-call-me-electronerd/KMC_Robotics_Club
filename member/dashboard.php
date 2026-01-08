@@ -25,7 +25,7 @@ $stats = [
         ['id' => $userId]
     )['c'],
     'unread_messages' => $db->fetchOne(
-        "SELECT COUNT(*) as c FROM messages WHERE receiver_id = :id AND is_read = 0",
+        "SELECT COUNT(*) as c FROM messages WHERE recipient_id = :id AND status = 'unread'",
         ['id' => $userId]
     )['c'],
     'gallery_uploads' => $db->fetchOne(
