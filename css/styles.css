@@ -8,17 +8,21 @@
     --secondary-accent: #7000ff;
 }
 body {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: var(--dark-navy);
     background-image: 
         radial-gradient(circle at 15% 50%, rgba(112, 0, 255, 0.08), transparent 25%),
         radial-gradient(circle at 85% 30%, rgba(0, 242, 255, 0.08), transparent 25%);
-    color: var(--slate);
-    font-size: 18px;
-    line-height: 1.6;
+    color: #b8c5d6;
+    font-size: 16px;
+    line-height: 1.7;
     overflow-x: hidden;
     margin: 0;
     padding: 0;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 body.light-mode {
     background: #f0f4f8;
@@ -52,8 +56,10 @@ body::before {
     opacity: 0.6;
 }
 .font-mono { font-family: 'Roboto Mono', monospace; }
-.font-orbitron { font-family: 'Orbitron', sans-serif; }
-.font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+.font-orbitron { font-family: 'Orbitron', sans-serif; letter-spacing: 0.05em; }
+.font-rajdhani { font-family: 'Poppins', sans-serif; }
+.font-poppins { font-family: 'Poppins', sans-serif; }
+.font-inter { font-family: 'Inter', sans-serif; }
 
 .text-glow { color: var(--accent); text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent); }
 
