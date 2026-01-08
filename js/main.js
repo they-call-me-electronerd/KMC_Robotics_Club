@@ -1,3 +1,45 @@
+// Load navigation component
+function loadNavigation() {
+    const navPlaceholder = document.getElementById('nav-placeholder');
+    if (!navPlaceholder) return;
+    
+    // Determine the correct path based on current page location
+    const isRootPage = window.location.pathname.endsWith('index.html') || 
+                       window.location.pathname.endsWith('/') ||
+                       !window.location.pathname.includes('/pages/');
+    const navPath = isRootPage ? 'components/nav.html' : '../components/nav.html';
+    
+    fetch(navPath)
+        .then(response => response.text())
+        .then(html => {
+            navPlaceholder.innerHTML = html;
+            // Re-initialize Feather Icons after nav loads
+            if (window.feather && typeof window.feather.replace === 'function') {
+                window.feather.replace();
+            }
+            // Re-attach mobile menu event listener
+            initializeMobileMenu();
+        })
+        .catch(error => console.error('Error loading navigation:', error));
+}
+
+// Initialize mobile menu
+function initializeMobileMenu() {
+    const mobileBtn = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileBtn && mobileMenu) {
+        // Remove any existing listeners
+        mobileBtn.replaceWith(mobileBtn.cloneNode(true));
+        const newMobileBtn = document.getElementById('mobile-menu-button');
+        
+        newMobileBtn.addEventListener('click', toggleMobileMenu);
+    }
+}
+
+// Load navigation on page load
+document.addEventListener('DOMContentLoaded', loadNavigation);
+
 // Initialize Feather Icons
 if (window.feather && typeof window.feather.replace === 'function') {
     window.feather.replace();
