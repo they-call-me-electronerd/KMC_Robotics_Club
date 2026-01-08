@@ -169,109 +169,165 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
     });
 });
 
-// Particle animation with reduced intensity on mobile for performance
-const canvas = document.getElementById('particle-canvas');
-const ctx = canvas ? canvas.getContext('2d') : null;
+// ============================================
+// NEURAL WEB CURSOR REPULSION EFFECT
+// Particles move and repel from cursor on hover
+// ============================================
 
-// Detect mobile device
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-
-// Debounce function for resize events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-const resize = () => {
+(function() {
+    'use strict';
+    
+    const canvas = document.getElementById('particle-canvas');
     if (!canvas) return;
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-    // Reinitialize particles on resize
-    if (particles.length > 0) {
-        init();
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    // Configuration
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    const PARTICLE_COUNT = isMobile ? 50 : 120;
+    const CONNECT_DISTANCE = isMobile ? 100 : 140;
+    const MOUSE_RADIUS = 150;
+    const REPEL_STRENGTH = 8;
+    const PARTICLE_SPEED = 0.4;
+    const PARTICLE_COLOR = 'rgba(0, 242, 255, 0.8)';
+    const LINE_COLOR = '0, 242, 255';
+    
+    // State
+    const mouse = { x: null, y: null, radius: MOUSE_RADIUS };
+    const particles = [];
+    
+    // Resize canvas
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
-};
-
-resize();
-window.addEventListener('resize', debounce(resize, 250));
-
-class Particle {
-    constructor(x, y, dx, dy, size) {
-        this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size;
-        this.color = `rgba(0, 242, 255, ${Math.random() * 0.5 + 0.1})`;
+    
+    resize();
+    window.addEventListener('resize', resize);
+    
+    // Mouse events
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+    
+    window.addEventListener('mouseout', () => {
+        mouse.x = null;
+        mouse.y = null;
+    });
+    
+    // Touch events for mobile
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+            mouse.x = e.touches[0].clientX;
+            mouse.y = e.touches[0].clientY;
+        }
+    }, { passive: true });
+    
+    window.addEventListener('touchend', () => {
+        mouse.x = null;
+        mouse.y = null;
+    });
+    
+    // Particle class
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 1;
+            this.vx = (Math.random() - 0.5) * PARTICLE_SPEED;
+            this.vy = (Math.random() - 0.5) * PARTICLE_SPEED;
+        }
+        
+        update() {
+            // Normal movement
+            this.x += this.vx;
+            this.y += this.vy;
+            
+            // Bounce off edges
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            
+            // Cursor repulsion
+            if (mouse.x !== null && mouse.y !== null) {
+                const dx = this.x - mouse.x;
+                const dy = this.y - mouse.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < mouse.radius) {
+                    const angle = Math.atan2(dy, dx);
+                    const force = (mouse.radius - distance) / mouse.radius;
+                    const repelX = Math.cos(angle) * force * REPEL_STRENGTH;
+                    const repelY = Math.sin(angle) * force * REPEL_STRENGTH;
+                    
+                    this.x += repelX;
+                    this.y += repelY;
+                }
+            }
+            
+            // Keep particles in bounds after repulsion
+            if (this.x < 0) this.x = 0;
+            if (this.x > canvas.width) this.x = canvas.width;
+            if (this.y < 0) this.y = 0;
+            if (this.y > canvas.height) this.y = canvas.height;
+        }
+        
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = PARTICLE_COLOR;
+            ctx.fill();
+        }
     }
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-    update() {
-        if (this.x > canvas.width || this.x < 0) this.dx *= -1;
-        if (this.y > canvas.height || this.y < 0) this.dy *= -1;
-        this.x += this.dx; this.y += this.dy;
-        this.draw();
-    }
-}
-
-let particles = [];
-const init = () => {
-    if (!canvas) return;
-    particles = [];
-    // Significantly reduce particles on mobile for better performance
-    const baseDivisor = isMobile ? 25000 : 9000;
-    const count = Math.min((canvas.width * canvas.height) / baseDivisor, isMobile ? 30 : 80);
-    for (let i = 0; i < count; i++) {
-        const size = Math.random() * 2 + 1;
-        const x = Math.random() * (canvas.width - size * 2) + size;
-        const y = Math.random() * (canvas.height - size * 2) + size;
-        // Slower particles on mobile for smoother animation
-        const speedMultiplier = isMobile ? 0.5 : 1;
-        const dx = (Math.random() * 2 - 1) * speedMultiplier;
-        const dy = (Math.random() * 2 - 1) * speedMultiplier;
-        particles.push(new Particle(x, y, dx, dy, size));
-    }
-};
-
-const connect = () => {
-    if (!canvas) return;
-    for (let a = 0; a < particles.length; a++) {
-        for (let b = a; b < particles.length; b++) {
-            const dx = particles[a].x - particles[b].x;
-            const dy = particles[a].y - particles[b].y;
-            const dist = dx * dx + dy * dy;
-            if (dist < (canvas.width / 7) * (canvas.height / 7)) {
-                const opacity = 1 - dist / 20000;
-                ctx.strokeStyle = `rgba(0, 242, 255, ${opacity * 0.1})`;
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(particles[a].x, particles[a].y);
-                ctx.lineTo(particles[b].x, particles[b].y);
-                ctx.stroke();
+    
+    // Draw connections between nearby particles
+    function connect() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < CONNECT_DISTANCE) {
+                    const opacity = (1 - dist / CONNECT_DISTANCE) * 0.5;
+                    ctx.strokeStyle = `rgba(${LINE_COLOR}, ${opacity})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
             }
         }
     }
-};
-
-const animate = () => {
-    if (!canvas || !ctx) return;
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p) => p.update());
-    connect();
-};
-
-if (canvas && ctx) {
+    
+    // Animation loop
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+        }
+        
+        connect();
+        requestAnimationFrame(animate);
+    }
+    
+    // Initialize particles
+    function init() {
+        particles.length = 0;
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push(new Particle());
+        }
+        animate();
+    }
+    
     init();
-    animate();
-}
+    
+    console.log('Neural Web: Initialized with', PARTICLE_COUNT, 'particles');
+})();
 
 // Typing animation
 const typingText = document.getElementById('typingText');
