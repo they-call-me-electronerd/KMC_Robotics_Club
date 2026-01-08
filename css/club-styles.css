@@ -18,6 +18,33 @@
     /* Safe area for notched phones */
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
+    /* Ensure content is visible */
+    overflow: visible !important;
+}
+
+/* Ensure nav-placeholder doesn't hide content */
+#nav-placeholder {
+    position: relative;
+    z-index: 1001;
+}
+
+#nav-placeholder header {
+    overflow: visible !important;
+}
+
+#nav-placeholder nav {
+    overflow: visible !important;
+}
+
+/* Desktop Navigation - ensure visibility on larger screens */
+.desktop-nav {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    .desktop-nav {
+        display: flex !important;
+    }
 }
 
 @media (min-width: 768px) {
