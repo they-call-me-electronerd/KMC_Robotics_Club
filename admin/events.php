@@ -53,10 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 // Handle image upload
                 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                    $errors = Security::validateFileUpload($_FILES['image']);
-                    if (empty($errors)) {
+                    $uploadErrors = Security::validateFileUpload($_FILES['image']);
+                    if (empty($uploadErrors)) {
                         $filename = Security::generateSafeFilename($_FILES['image']['name']);
-                        if (move_uploaded_file($_FILES['image']['tmp_name'], UPLOAD_EVENTS . '/' . $filename)) {
+                        $targetPath = UPLOAD_EVENTS . '/' . $filename;
+                        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
                             // Delete old image if updating
                             if ($action === 'update' && !empty($_POST['id'])) {
                                 $oldEvent = $db->fetchOne("SELECT image_path FROM events WHERE id = :id", ['id' => $_POST['id']]);
@@ -65,8 +66,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 }
                             }
                             $eventData['image_path'] = $filename;
+                        } else {
+                            $error = 'Failed to move uploaded file. Check directory permissions.';
                         }
+                    } else {
+                        $error = 'Upload error: ' . implode(', ', $uploadErrors);
                     }
+                } elseif (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    // Handle other upload errors
+                    $uploadErrors = Security::validateFileUpload($_FILES['image']);
+                    $error = 'Upload error: ' . implode(', ', $uploadErrors);
                 }
                 
                 if ($action === 'create') {
