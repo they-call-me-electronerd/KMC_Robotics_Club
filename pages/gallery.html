@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050a14" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/png" href="../assets/images/kmc-rc-logo.png">
+    <link rel="apple-touch-icon" href="../assets/images/kmc-rc-logo.png">
+    <title>Gallery | KMC Robotics Club</title>
+    <meta name="description" content="Explore photos and videos from KMC Robotics Club events, projects, workshops, and competitions.">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    
+    <style>
+        body { background-color: #050a14; margin: 0; }
+    </style>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-navy': '#050a14',
+                        'light-navy': '#0f1a2e',
+                        'slate': '#94a3b8',
+                        'light-slate': '#e2e8f0',
+                        'accent': '#00f2ff',
+                        'accent-glow': 'rgba(0, 242, 255, 0.2)',
+                        'secondary-accent': '#7000ff',
+                    },
+                    fontFamily: {
+                        'sci': ['Orbitron', 'sans-serif'],
+                        'tech': ['Rajdhani', 'sans-serif'],
+                        'mono': ['Roboto Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/club-styles.css">
+    <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body class="antialiased">
+    <canvas id="particle-canvas"></canvas>
+    
+    <div class="shape-blob one"></div>
+    <div class="shape-blob two"></div>
+    <div class="shape-blob three"></div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+
+    <main>
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="page-header-content" data-aos="fade-up">
+                <h1 class="page-title">Gallery</h1>
+                <p class="page-subtitle">Capturing moments of innovation, learning, and achievement at KMC Robotics Club</p>
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="../index.html">Home</a>
+                    <span>/</span>
+                    <span>Gallery</span>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Gallery Section -->
+        <section class="section-spacing">
+            <div class="container mx-auto px-4 md:px-6">
+                
+                <!-- Filter Tabs -->
+                <div class="gallery-filter" data-aos="fade-up">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="projects">Projects</button>
+                    <button class="filter-btn" data-filter="events">Events</button>
+                    <button class="filter-btn" data-filter="workshops">Workshops</button>
+                    <button class="filter-btn" data-filter="competitions">Competitions</button>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="gallery-grid" id="gallery-grid">
+                    
+                    <!-- Gallery Item 1 - Wide -->
+                    <div class="gallery-item wide" data-category="projects" data-aos="fade-up" data-title="Autonomous Robot v2" data-description="Our flagship line-following robot with obstacle avoidance capabilities">
+                        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=400&fit=crop" alt="Autonomous Robot" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Autonomous Robot v2</h3>
+                            <span class="gallery-category">Projects</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 2 -->
+                    <div class="gallery-item" data-category="workshops" data-aos="fade-up" data-aos-delay="100" data-title="Arduino Workshop" data-description="Hands-on session teaching embedded systems basics">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop" alt="Arduino Workshop" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Arduino Workshop</h3>
+                            <span class="gallery-category">Workshops</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 3 -->
+                    <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="200" data-title="Tech Talk 2025" data-description="Industry experts sharing insights on AI and robotics">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=400&fit=crop" alt="Tech Talk" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Tech Talk 2025</h3>
+                            <span class="gallery-category">Events</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 4 - Tall -->
+                    <div class="gallery-item tall" data-category="projects" data-aos="fade-up" data-aos-delay="100" data-title="Robotic Arm Project" data-description="6-DOF robotic arm for precision tasks">
+                        <img src="https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=400&h=800&fit=crop" alt="Robotic Arm" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Robotic Arm Project</h3>
+                            <span class="gallery-category">Projects</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 5 -->
+                    <div class="gallery-item" data-category="competitions" data-aos="fade-up" data-aos-delay="200" data-title="RoboWars 2025" data-description="Inter-college robotics competition">
+                        <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=400&h=400&fit=crop" alt="RoboWars" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">RoboWars 2025</h3>
+                            <span class="gallery-category">Competitions</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 6 -->
+                    <div class="gallery-item" data-category="workshops" data-aos="fade-up" data-aos-delay="100" data-title="3D Printing Session" data-description="Learning CAD design and 3D printing">
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop" alt="3D Printing" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">3D Printing Session</h3>
+                            <span class="gallery-category">Workshops</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 7 - Wide -->
+                    <div class="gallery-item wide" data-category="events" data-aos="fade-up" data-title="Club Inauguration" data-description="Official launch ceremony of KMC Robotics Club">
+                        <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&h=400&fit=crop" alt="Club Inauguration" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Club Inauguration</h3>
+                            <span class="gallery-category">Events</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 8 -->
+                    <div class="gallery-item" data-category="projects" data-aos="fade-up" data-aos-delay="100" data-title="Drone Build" data-description="Custom quadcopter assembly project">
+                        <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&h=400&fit=crop" alt="Drone Build" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Drone Build</h3>
+                            <span class="gallery-category">Projects</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 9 -->
+                    <div class="gallery-item" data-category="competitions" data-aos="fade-up" data-aos-delay="200" data-title="Award Ceremony" data-description="Celebrating our team's achievements">
+                        <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=400&h=400&fit=crop" alt="Award Ceremony" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Award Ceremony</h3>
+                            <span class="gallery-category">Competitions</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 10 -->
+                    <div class="gallery-item" data-category="workshops" data-aos="fade-up" data-aos-delay="100" data-title="AI/ML Bootcamp" data-description="Machine learning fundamentals training">
+                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=400&fit=crop" alt="AI Bootcamp" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">AI/ML Bootcamp</h3>
+                            <span class="gallery-category">Workshops</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 11 - Tall -->
+                    <div class="gallery-item tall" data-category="projects" data-aos="fade-up" data-aos-delay="200" data-title="IoT Smart Home" data-description="Home automation prototype with sensors">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=800&fit=crop" alt="IoT Project" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">IoT Smart Home</h3>
+                            <span class="gallery-category">Projects</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 12 -->
+                    <div class="gallery-item" data-category="events" data-aos="fade-up" data-title="Team Meeting" data-description="Weekly planning and brainstorming session">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=400&fit=crop" alt="Team Meeting" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Team Meeting</h3>
+                            <span class="gallery-category">Events</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 13 -->
+                    <div class="gallery-item" data-category="projects" data-aos="fade-up" data-aos-delay="100" data-title="PCB Design" data-description="Custom circuit board for sensor integration">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop" alt="PCB Design" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">PCB Design</h3>
+                            <span class="gallery-category">Projects</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 14 - Wide -->
+                    <div class="gallery-item wide" data-category="competitions" data-aos="fade-up" data-title="National Robotics Olympiad" data-description="Competing at the national level robotics competition">
+                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=400&fit=crop" alt="Olympiad" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">National Robotics Olympiad</h3>
+                            <span class="gallery-category">Competitions</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 15 -->
+                    <div class="gallery-item" data-category="workshops" data-aos="fade-up" data-aos-delay="200" data-title="Soldering Workshop" data-description="Learning electronic component assembly">
+                        <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=400&h=400&fit=crop" alt="Soldering" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Soldering Workshop</h3>
+                            <span class="gallery-category">Workshops</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 16 -->
+                    <div class="gallery-item" data-category="events" data-aos="fade-up" data-title="Open House" data-description="Showcasing projects to new students">
+                        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=400&h=400&fit=crop" alt="Open House" loading="lazy">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Open House</h3>
+                            <span class="gallery-category">Events</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Load More Button -->
+                <div class="text-center mt-12" data-aos="fade-up">
+                    <button class="cta-secondary" id="load-more">
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                        Load More
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="Close lightbox">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+            <button class="lightbox-nav lightbox-prev" aria-label="Previous image">
+                <i data-feather="chevron-left" class="w-6 h-6"></i>
+            </button>
+            <button class="lightbox-nav lightbox-next" aria-label="Next image">
+                <i data-feather="chevron-right" class="w-6 h-6"></i>
+            </button>
+            <img id="lightbox-image" src="" alt="Gallery image">
+            <div class="lightbox-caption">
+                <h3 id="lightbox-title" class="text-white font-rajdhani text-xl mb-1"></h3>
+                <p id="lightbox-description" class="text-slate text-sm"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-top" aria-label="Scroll to top">
+        <i data-feather="chevron-up" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gallery Filter Functionality
+            const filterBtns = document.querySelectorAll('.gallery-filter .filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filter = this.getAttribute('data-filter');
+
+                    galleryItems.forEach(item => {
+                        const category = item.getAttribute('data-category');
+                        
+                        if (filter === 'all' || category === filter) {
+                            item.style.display = '';
+                            item.classList.remove('hidden');
+                        } else {
+                            item.style.display = 'none';
+                            item.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Lightbox Functionality
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDescription = document.getElementById('lightbox-description');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const lightboxPrev = document.querySelector('.lightbox-prev');
+            const lightboxNext = document.querySelector('.lightbox-next');
+            
+            let currentIndex = 0;
+            let visibleItems = [];
+
+            function updateVisibleItems() {
+                visibleItems = Array.from(galleryItems).filter(item => !item.classList.contains('hidden'));
+            }
+
+            function openLightbox(index) {
+                updateVisibleItems();
+                currentIndex = index;
+                const item = visibleItems[currentIndex];
+                const img = item.querySelector('img');
+                const title = item.getAttribute('data-title');
+                const description = item.getAttribute('data-description');
+
+                lightboxImage.src = img.src;
+                lightboxTitle.textContent = title || '';
+                lightboxDescription.textContent = description || '';
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function showPrev() {
+                currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+                openLightbox(currentIndex);
+            }
+
+            function showNext() {
+                currentIndex = (currentIndex + 1) % visibleItems.length;
+                openLightbox(currentIndex);
+            }
+
+            // Event Listeners
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', function() {
+                    updateVisibleItems();
+                    const visibleIndex = visibleItems.indexOf(item);
+                    openLightbox(visibleIndex);
+                });
+            });
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', showPrev);
+            lightboxNext.addEventListener('click', showNext);
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!lightbox.classList.contains('active')) return;
+                
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+            });
+
+            // Load More Button (simulation)
+            const loadMoreBtn = document.getElementById('load-more');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', function() {
+                    this.innerHTML = '<i data-feather="loader" class="w-5 h-5 animate-spin"></i> Loading...';
+                    feather.replace();
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i data-feather="check" class="w-5 h-5"></i> All Loaded';
+                        feather.replace();
+                        this.disabled = true;
+                        this.style.opacity = '0.5';
+                        this.style.cursor = 'not-allowed';
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
