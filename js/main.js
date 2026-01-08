@@ -104,9 +104,6 @@ if (window.AOS && typeof window.AOS.init === 'function') {
 }
 
 // Mobile menu toggle
-const mobileBtn = document.getElementById('mobile-menu-button');
-const mobileMenu = document.getElementById('mobile-menu');
-
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobile-menu');
     if (!mobileMenu) return;
@@ -127,10 +124,6 @@ function toggleMobileMenu() {
             }
         }, 300); 
     }
-}
-
-if (mobileBtn) {
-    mobileBtn.addEventListener('click', toggleMobileMenu);
 }
 
 // Smooth scrolling for anchor links
@@ -332,38 +325,9 @@ modals.forEach(modal => {
     });
 });
 
-// Dark mode toggle functionality
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
-
-if (themeToggle && themeIcon) {
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'dark') {
-        document.body.classList.remove('light-mode');
-        themeIcon.setAttribute('data-feather', 'moon');
-    } else if (currentTheme === 'light') {
-        document.body.classList.add('light-mode');
-        themeIcon.setAttribute('data-feather', 'sun');
-    }
-    if (window.feather && typeof window.feather.replace === 'function') {
-        window.feather.replace();
-    }
-
-    themeToggle.addEventListener('click', function() {
-        if (document.body.classList.contains('light-mode')) {
-            document.body.classList.remove('light-mode');
-            localStorage.setItem('theme', 'dark');
-            themeIcon.setAttribute('data-feather', 'moon');
-        } else {
-            document.body.classList.add('light-mode');
-            localStorage.setItem('theme', 'light');
-            themeIcon.setAttribute('data-feather', 'sun');
-        }
-        if (window.feather && typeof window.feather.replace === 'function') {
-            window.feather.replace();
-        }
-    });
-}
+// Enforce Dark Mode
+document.body.classList.remove('light-mode');
+localStorage.setItem('theme', 'dark');
 
 // Enhanced project card interactions
 document.querySelectorAll('.project-card .project-btn').forEach(btn => {
