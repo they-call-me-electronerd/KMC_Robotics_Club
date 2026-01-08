@@ -2,14 +2,43 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050a14" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="icon" type="image/png" href="assets/images/kmc-rc-logo.png">
+    <link rel="apple-touch-icon" href="assets/images/kmc-rc-logo.png">
     <title>Kathmandu Model College Robotics Club (KMC RC) | Build • Code • Innovate</title>
     <meta name="description" content="Kathmandu Model College Robotics Club (KMC RC) — A student-led technical community focused on robotics, AI, embedded systems, and emerging technologies.">
     <meta name="keywords" content="robotics club, AI community, embedded systems, IoT, automation, student research, Kathmandu Model College">
     <meta property="og:title" content="Kathmandu Model College Robotics Club (KMC RC)">
     <meta property="og:description" content="Building the Future, One Innovation at a Time">
     <meta property="og:type" content="website">
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    
+    <!-- Critical CSS inline for faster FCP -->
+    <style>
+        /* Critical CSS for above-the-fold content */
+        body { background-color: #050a14; margin: 0; }
+        .loading-screen { 
+            position: fixed; 
+            inset: 0; 
+            background: #050a14; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+        .loading-screen.hidden { opacity: 0; pointer-events: none; }
+    </style>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -29,13 +58,14 @@
                         'sci': ['Orbitron', 'sans-serif'],
                         'tech': ['Rajdhani', 'sans-serif'],
                         'mono': ['Roboto Mono', 'monospace'],
+                    },
+                    screens: {
+                        'xs': '375px',
                     }
                 }
             }
         }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <script src="https://unpkg.com/feather-icons"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
