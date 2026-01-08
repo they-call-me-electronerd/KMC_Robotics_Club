@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050a14" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/png" href="../assets/images/kmc-rc-logo.png">
+    <link rel="apple-touch-icon" href="../assets/images/kmc-rc-logo.png">
+    <title>About Us | KMC Robotics Club</title>
+    <meta name="description" content="Learn about KMC Robotics Club - our mission, vision, values, and the journey of building a technical community at Kathmandu Model College.">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    
+    <style>
+        body { background-color: #050a14; margin: 0; }
+    </style>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-navy': '#050a14',
+                        'light-navy': '#0f1a2e',
+                        'slate': '#94a3b8',
+                        'light-slate': '#e2e8f0',
+                        'accent': '#00f2ff',
+                        'accent-glow': 'rgba(0, 242, 255, 0.2)',
+                        'secondary-accent': '#7000ff',
+                    },
+                    fontFamily: {
+                        'sci': ['Orbitron', 'sans-serif'],
+                        'tech': ['Rajdhani', 'sans-serif'],
+                        'mono': ['Roboto Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/club-styles.css">
+    <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body class="antialiased">
+    <canvas id="particle-canvas"></canvas>
+    
+    <div class="shape-blob one"></div>
+    <div class="shape-blob two"></div>
+    <div class="shape-blob three"></div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+
+    <main>
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="page-header-content" data-aos="fade-up">
+                <h1 class="page-title">About Us</h1>
+                <p class="page-subtitle">Discover our mission, vision, and the passionate community driving innovation at KMC Robotics Club</p>
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="../index.html">Home</a>
+                    <span>/</span>
+                    <span>About</span>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Mission Section -->
+        <section class="about-section">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-16">
+                    <div data-aos="fade-right">
+                        <span class="inline-block px-4 py-2 bg-[rgba(0,242,255,0.05)] border border-accent/30 rounded text-accent text-sm font-mono tracking-widest uppercase mb-6">
+                            Our Mission
+                        </span>
+                        <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
+                            Building Tomorrow's <span class="text-accent">Innovators</span>
+                        </h2>
+                        <p class="text-slate leading-relaxed mb-6">
+                            KMC Robotics Club is a student-led technical community at Kathmandu Model College dedicated to fostering innovation, creativity, and technical excellence. We bring together passionate students who share a common goal: to explore the frontiers of robotics, artificial intelligence, and emerging technologies.
+                        </p>
+                        <p class="text-slate leading-relaxed">
+                            Our mission is to provide a collaborative platform where students can learn, experiment, and create solutions that address real-world challenges. Through hands-on projects, workshops, and competitions, we empower the next generation of engineers and innovators.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
+                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Active Members</div>
+                        </div>
+                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="stat-number">20+</div>
+                            <div class="stat-label">Projects Built</div>
+                        </div>
+                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">Events Hosted</div>
+                        </div>
+                        <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Awards Won</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vision Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16">
+                    <div class="mission-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="mission-icon">
+                            <i data-feather="target" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="mission-title">Our Vision</h3>
+                        <p class="mission-text">
+                            To become a leading hub for technological innovation in Nepal, nurturing world-class engineers and researchers who will shape the future of robotics and AI.
+                        </p>
+                    </div>
+                    <div class="mission-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="mission-icon">
+                            <i data-feather="heart" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="mission-title">Our Values</h3>
+                        <p class="mission-text">
+                            We believe in collaboration over competition, continuous learning, ethical innovation, and creating inclusive spaces where every voice is heard and valued.
+                        </p>
+                    </div>
+                    <div class="mission-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="mission-icon">
+                            <i data-feather="zap" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="mission-title">Our Impact</h3>
+                        <p class="mission-text">
+                            We're building a community of problem-solvers who tackle challenges from sustainable energy to healthcare automation, making technology accessible to all.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Do Section -->
+        <section class="about-section bg-[rgba(15,26,46,0.3)]">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <span class="inline-block px-4 py-2 bg-[rgba(0,242,255,0.05)] border border-accent/30 rounded text-accent text-sm font-mono tracking-widest uppercase mb-4">
+                        What We Do
+                    </span>
+                    <h2 class="font-orbitron text-2xl md:text-3xl font-bold text-white">
+                        Our Focus Areas
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="value-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="value-icon">
+                            <i data-feather="cpu" class="w-5 h-5"></i>
+                        </div>
+                        <div class="value-content">
+                            <h4>Robotics & Automation</h4>
+                            <p>Design and build autonomous robots, from line followers to advanced robotic arms, exploring mechanical design and control systems.</p>
+                        </div>
+                    </div>
+                    <div class="value-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="value-icon">
+                            <i data-feather="code" class="w-5 h-5"></i>
+                        </div>
+                        <div class="value-content">
+                            <h4>AI & Machine Learning</h4>
+                            <p>Explore neural networks, computer vision, and natural language processing to create intelligent systems that learn and adapt.</p>
+                        </div>
+                    </div>
+                    <div class="value-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="value-icon">
+                            <i data-feather="wifi" class="w-5 h-5"></i>
+                        </div>
+                        <div class="value-content">
+                            <h4>IoT & Embedded Systems</h4>
+                            <p>Connect devices and sensors to build smart systems for home automation, environmental monitoring, and industrial applications.</p>
+                        </div>
+                    </div>
+                    <div class="value-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="value-icon">
+                            <i data-feather="users" class="w-5 h-5"></i>
+                        </div>
+                        <div class="value-content">
+                            <h4>Workshops & Training</h4>
+                            <p>Regular sessions on programming, electronics, 3D printing, and emerging technologies to build skills from beginner to advanced levels.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Journey Timeline -->
+        <section class="about-section">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <span class="inline-block px-4 py-2 bg-[rgba(0,242,255,0.05)] border border-accent/30 rounded text-accent text-sm font-mono tracking-widest uppercase mb-4">
+                        Our Journey
+                    </span>
+                    <h2 class="font-orbitron text-2xl md:text-3xl font-bold text-white">
+                        Milestones & Achievements
+                    </h2>
+                </div>
+
+                <div class="max-w-3xl mx-auto">
+                    <div class="timeline">
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-title">Club Foundation</div>
+                            <p class="timeline-desc">KMC Robotics Club was established with a vision to create a thriving tech community at Kathmandu Model College, starting with 15 founding members.</p>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-title">First Robotics Competition</div>
+                            <p class="timeline-desc">Participated in our first inter-college robotics competition, securing 2nd place with our autonomous line-following robot project.</p>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-title">AI Workshop Series</div>
+                            <p class="timeline-desc">Launched a comprehensive workshop series covering Python, machine learning, and computer vision, training over 100 students.</p>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                            <div class="timeline-year">2025</div>
+                            <div class="timeline-title">Innovation Lab Inauguration</div>
+                            <p class="timeline-desc">Opened our dedicated robotics lab equipped with 3D printers, electronics workstations, and development kits for hands-on learning.</p>
+                        </div>
+                        <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
+                            <div class="timeline-year">Present</div>
+                            <div class="timeline-title">Growing Community</div>
+                            <p class="timeline-desc">Today, we're a vibrant community of 50+ members working on cutting-edge projects and preparing for national-level competitions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="about-section text-center">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="max-w-2xl mx-auto" data-aos="fade-up">
+                    <h2 class="font-orbitron text-2xl md:text-3xl font-bold text-white mb-6">
+                        Ready to Join Our Community?
+                    </h2>
+                    <p class="text-slate mb-8 text-lg">
+                        Whether you're a beginner curious about technology or an experienced developer, there's a place for you in our club.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="join.html" class="cta-primary">
+                            <i data-feather="user-plus" class="w-5 h-5"></i>
+                            Join Now
+                        </a>
+                        <a href="team.html" class="cta-secondary">
+                            <i data-feather="users" class="w-5 h-5"></i>
+                            Meet the Team
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-top" aria-label="Scroll to top">
+        <i data-feather="chevron-up" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+    </script>
+</body>
+</html>
