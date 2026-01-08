@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kathmandu Model College Robotics Club (KMC RC) | Build • Code • Innovate</title>
-    <meta name="description" content="Kathmandu Model College Robotics Club (KMC RC) — hands-on projects, workshops, and competitions in robotics and technology.">
-    <meta name="keywords" content="robotics club, AI club, innovation, engineering, technology, student club">
+    <meta name="description" content="Kathmandu Model College Robotics Club (KMC RC) — A student-led technical community focused on robotics, AI, embedded systems, and emerging technologies.">
+    <meta name="keywords" content="robotics club, AI community, embedded systems, IoT, automation, student research, Kathmandu Model College">
     <meta property="og:title" content="Kathmandu Model College Robotics Club (KMC RC)">
     <meta property="og:description" content="Building the Future, One Innovation at a Time">
     <meta property="og:type" content="website">
@@ -16,12 +16,18 @@
             theme: {
                 extend: {
                     colors: {
-                        'dark-navy': '#0a192f',
-                        'light-navy': '#112240',
-                        'slate': '#8892b0',
-                        'light-slate': '#ccd6f6',
-                        'accent': '#00f5d4',
-                        'accent-glow': 'rgba(0, 245, 212, 0.1)',
+                        'dark-navy': '#050a14',
+                        'light-navy': '#0f1a2e',
+                        'slate': '#94a3b8',
+                        'light-slate': '#e2e8f0',
+                        'accent': '#00f2ff',
+                        'accent-glow': 'rgba(0, 242, 255, 0.2)',
+                        'secondary-accent': '#7000ff',
+                    },
+                    fontFamily: {
+                        'sci': ['Orbitron', 'sans-serif'],
+                        'tech': ['Rajdhani', 'sans-serif'],
+                        'mono': ['Roboto Mono', 'monospace'],
                     }
                 }
             }
@@ -29,7 +35,7 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;700&family=Inter:wght@400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <script src="https://unpkg.com/feather-icons"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
@@ -56,95 +62,120 @@
     <main class="container mx-auto px-6">
 
         <!-- Hero Section -->
-        <section class="hero-institutional pt-32" data-aos="fade-up">
+        <section class="hero-institutional pt-32 relative" data-aos="fade-up">
+            <!-- Decorative Tech Elements -->
+           <!-- Removed decorative terminal text for formal look -->
+
             <div class="hero-content">
                 <div class="hero-glow"></div>
                 
                 <div class="mb-6" data-aos="fade-down">
-                    <span class="inline-block px-4 py-2 bg-[#00f5d4]/10 border border-[#00f5d4] rounded-full text-[#00f5d4] text-sm font-mono">
-                        Est. 2024 • Innovation Driven
+                    <span class="inline-block px-4 py-2 bg-[rgba(0,242,255,0.05)] border border-accent rounded-sm text-accent text-sm font-mono tracking-widest uppercase">
+                        Est. 2024 • KMC Robotics Club
                     </span>
                 </div>
 
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 gradient-text" data-aos="fade-up" data-aos-delay="100">
-                    Kathmandu Model College<br/>Robotics Club
+                <h1 class="text-5xl md:text-8xl font-bold mb-6 font-orbitron tracking-tighter" data-aos="fade-up" data-aos-delay="100">
+                    <span class="glitch" data-text="KMC ROBOTICS">KMC ROBOTICS</span><br/>
+                    <span class="text-4xl md:text-6xl text-slate-400 font-rajdhani font-light">CLUB</span>
                 </h1>
 
-                <div class="text-2xl md:text-3xl text-[#00f5d4] font-mono mb-8 min-h-[40px]" data-aos="fade-up" data-aos-delay="200">
-                    <span id="typingText"></span>
+                <div class="text-xl md:text-2xl text-accent font-mono mb-8 min-h-[40px] tracking-wide" data-aos="fade-up" data-aos-delay="200">
+                    <span id="typingText"></span><span class="animate-pulse">|</span>
                 </div>
 
-                <p class="text-xl text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed" data-aos="fade-up" data-aos-delay="300">
-                    We are a community of passionate students pushing the boundaries of robotics and artificial intelligence. 
-                    Join us to build cutting-edge projects, compete nationally, and shape the future of technology.
+                <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed font-rajdhani" data-aos="fade-up" data-aos-delay="300">
+                    A student-led technical community focused on robotics, artificial intelligence, embedded systems, and emerging technologies.
+                    We promote hands-on learning, innovation, and problem-solving through practical projects, workshops, and collaborative development.
                 </p>
 
-                <div class="flex flex-wrap gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
-                    <a href="pages/join.html" class="cta-primary">
-                        <i data-feather="user-plus" class="w-5 h-5"></i>
+                <div class="flex flex-wrap gap-6 justify-center" data-aos="fade-up" data-aos-delay="400">
+                    <a href="pages/join.html" class="project-btn text-lg group">
+                        <i data-feather="cpu" class="w-5 h-5 mr-3 group-hover:rotate-90 transition-transform"></i>
                         Join the Club
                     </a>
-                    <a href="pages/events.html" class="cta-secondary">
-                        <i data-feather="calendar" class="w-5 h-5"></i>
-                        View Events
+                    <a href="pages/events.html" class="project-btn text-lg !bg-transparent !border-slate-700 !text-slate-300 hover:!border-accent hover:!text-accent">
+                        <i data-feather="calendar" class="w-5 h-5 mr-3"></i>
+                        Explore Events
                     </a>
                 </div>
 
                 <!-- Stats -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 max-w-4xl mx-auto">
-                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="500">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 max-w-5xl mx-auto">
+                    <div class="stat-card group" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="absolute top-0 right-0 p-2 opacity-50 group-hover:opacity-100 transition-opacity">
+                            <i data-feather="users" class="w-4 h-4 text-accent"></i>
+                        </div>
                         <div class="stat-number">50+</div>
                         <div class="stat-label">Active Members</div>
                     </div>
-                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="stat-card group" data-aos="zoom-in" data-aos-delay="600">
+                         <div class="absolute top-0 right-0 p-2 opacity-50 group-hover:opacity-100 transition-opacity">
+                            <i data-feather="package" class="w-4 h-4 text-accent"></i>
+                        </div>
                         <div class="stat-number">25+</div>
-                        <div class="stat-label">Projects Completed</div>
+                        <div class="stat-label">Projects Built</div>
                     </div>
-                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="stat-card group" data-aos="zoom-in" data-aos-delay="700">
+                         <div class="absolute top-0 right-0 p-2 opacity-50 group-hover:opacity-100 transition-opacity">
+                            <i data-feather="tool" class="w-4 h-4 text-accent"></i>
+                        </div>
                         <div class="stat-number">15+</div>
-                        <div class="stat-label">Workshops Held</div>
+                        <div class="stat-label">Training Sessions</div>
                     </div>
-                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="800">
+                    <div class="stat-card group" data-aos="zoom-in" data-aos-delay="800">
+                         <div class="absolute top-0 right-0 p-2 opacity-50 group-hover:opacity-100 transition-opacity">
+                            <i data-feather="award" class="w-4 h-4 text-accent"></i>
+                        </div>
                         <div class="stat-number">10+</div>
-                        <div class="stat-label">Awards Won</div>
+                        <div class="stat-label">Achievements</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Mission Section -->
-        <section class="py-20" data-aos="fade-up">
-            <div class="max-w-5xl mx-auto">
-                <h2 class="section-header-club text-center mb-16">Our Mission</h2>
+        <section class="py-20 relative" data-aos="fade-up">
+            <!-- Background Grid Decoration -->
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(0,242,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,242,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
+
+            <div class="max-w-6xl mx-auto relative z-10">
+                <h2 class="section-header-club text-center mb-16">Core Directives</h2>
                 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="club-card text-center" data-aos="fade-up" data-aos-delay="100">
-                        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#00f5d4]/10 flex items-center justify-center">
-                            <i data-feather="zap" class="w-8 h-8 text-[#00f5d4]"></i>
+                    <div class="club-card text-center group" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-none bg-[rgba(0,242,255,0.1)] border border-accent flex items-center justify-center relative overflow-hidden group-hover:bg-accent group-hover:text-black transition-colors">
+                            <i data-feather="cpu" class="w-8 h-8"></i>
+                            <div class="absolute top-0 right-0 w-2 h-2 bg-accent"></div>
+                            <div class="absolute bottom-0 left-0 w-2 h-2 bg-accent"></div>
                         </div>
-                        <h3 class="text-xl font-bold text-light-slate mb-4">Innovate</h3>
-                        <p class="text-slate-400">
-                            Develop cutting-edge robotics and AI solutions that solve real-world problems and push technological boundaries.
+                        <h3 class="text-xl font-bold font-orbitron text-light-slate mb-4">Innovate</h3>
+                        <p class="text-slate-400 font-rajdhani">
+                            Explore hardware and software integration, including microcontrollers, IoT, automation, and AI/ML applications to solve real-world problems.
                         </p>
                     </div>
 
-                    <div class="club-card text-center" data-aos="fade-up" data-aos-delay="200">
-                        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#00f5d4]/10 flex items-center justify-center">
-                            <i data-feather="users" class="w-8 h-8 text-[#00f5d4]"></i>
+                    <div class="club-card text-center group" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-none bg-[rgba(0,242,255,0.1)] border border-accent flex items-center justify-center relative overflow-hidden group-hover:bg-accent group-hover:text-black transition-colors">
+                            <i data-feather="share-2" class="w-8 h-8"></i>
+                            <div class="absolute top-0 right-0 w-2 h-2 bg-accent"></div>
+                            <div class="absolute bottom-0 left-0 w-2 h-2 bg-accent"></div>
                         </div>
-                        <h3 class="text-xl font-bold text-light-slate mb-4">Collaborate</h3>
-                        <p class="text-slate-400">
-                            Foster a collaborative environment where members learn from each other and work together on ambitious projects.
+                        <h3 class="text-xl font-bold font-orbitron text-light-slate mb-4">Collaborate</h3>
+                        <p class="text-slate-400 font-rajdhani">
+                            Encourage teamwork, leadership, and real-world impact by working on academic, industrial, and social-tech projects in a shared research platform.
                         </p>
                     </div>
 
-                    <div class="club-card text-center" data-aos="fade-up" data-aos-delay="300">
-                        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#00f5d4]/10 flex items-center justify-center">
-                            <i data-feather="award" class="w-8 h-8 text-[#00f5d4]"></i>
+                    <div class="club-card text-center group" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-none bg-[rgba(0,242,255,0.1)] border border-accent flex items-center justify-center relative overflow-hidden group-hover:bg-accent group-hover:text-black transition-colors">
+                            <i data-feather="crosshair" class="w-8 h-8"></i>
+                            <div class="absolute top-0 right-0 w-2 h-2 bg-accent"></div>
+                            <div class="absolute bottom-0 left-0 w-2 h-2 bg-accent"></div>
                         </div>
-                        <h3 class="text-xl font-bold text-light-slate mb-4">Compete</h3>
-                        <p class="text-slate-400">
-                            Represent our institution in national and international robotics competitions, bringing home top honors.
+                        <h3 class="text-xl font-bold font-orbitron text-light-slate mb-4">Excel</h3>
+                        <p class="text-slate-400 font-rajdhani">
+                            Prepare for hackathons, research, and technology-driven careers through rigorous training, competitions, and hands-on workshops.
                         </p>
                     </div>
                 </div>
@@ -156,12 +187,16 @@
             <h2 class="section-header-club text-center mb-16">Featured Projects</h2>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="club-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-full h-48 bg-gradient-to-br from-[#112240] to-[#0a192f] rounded-lg mb-6 flex items-center justify-center">
-                        <i data-feather="cpu" class="w-20 h-20 text-[#00f5d4] opacity-50"></i>
+                <div class="club-card group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-full h-48 bg-gradient-to-br from-[#0f1a2e] to-[#050a14] border-b border-gray-800 mb-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=400')] opacity-20 bg-cover bg-center"></div>
+                        <div class="absolute inset-0 bg-blue-500/10 group-hover:bg-transparent transition-colors"></div>
+                        <i data-feather="server" class="w-16 h-16 text-accent opacity-80 relative z-10"></i>
+                         <!-- Scanline -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-[10px] w-full animate-[scan_2s_linear_infinite] opacity-30 pointer-events-none"></div>
                     </div>
-                    <h3 class="text-xl font-bold text-light-slate mb-3">Advanced Humanoid Robot</h3>
-                    <p class="text-slate-400 mb-4">
+                    <h3 class="text-xl font-bold font-orbitron text-light-slate mb-3">Humanoid Robot</h3>
+                    <p class="text-slate-400 mb-4 font-rajdhani text-sm">
                         AI-powered humanoid with voice recognition, facial detection, and autonomous navigation capabilities.
                     </p>
                     <div class="flex flex-wrap gap-2 mb-4">
@@ -169,35 +204,41 @@
                         <span class="skill-tag">AI</span>
                         <span class="skill-tag">IoT</span>
                     </div>
-                    <a href="pages/gallery.html" class="text-[#00f5d4] hover:underline font-mono text-sm inline-flex items-center gap-2">
-                        Learn More <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    <a href="pages/gallery.html" class="text-accent hover:text-white font-mono text-sm inline-flex items-center gap-2 group-hover:translate-x-2 transition-transform">
+                        Learn More <i data-feather="chevrons-right" class="w-4 h-4"></i>
                     </a>
                 </div>
 
-                <div class="club-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-full h-48 bg-gradient-to-br from-[#112240] to-[#0a192f] rounded-lg mb-6 flex items-center justify-center">
-                        <i data-feather="eye" class="w-20 h-20 text-[#00f5d4] opacity-50"></i>
+                <div class="club-card group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-full h-48 bg-gradient-to-br from-[#0f1a2e] to-[#050a14] border-b border-gray-800 mb-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400')] opacity-20 bg-cover bg-center"></div>
+                        <i data-feather="eye" class="w-16 h-16 text-accent opacity-80 relative z-10"></i>
+                        <!-- Scanline -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-[10px] w-full animate-[scan_3s_linear_infinite] opacity-30 pointer-events-none"></div>
                     </div>
-                    <h3 class="text-xl font-bold text-light-slate mb-3">Smart Surveillance System</h3>
-                    <p class="text-slate-400 mb-4">
+                    <h3 class="text-xl font-bold font-orbitron text-light-slate mb-3">Surveillance System</h3>
+                    <p class="text-slate-400 mb-4 font-rajdhani text-sm">
                         Real-time object detection and tracking system using advanced computer vision and machine learning.
                     </p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="skill-tag">OpenCV</span>
                         <span class="skill-tag">YOLO</span>
-                        <span class="skill-tag">Raspberry Pi</span>
+                        <span class="skill-tag">Pi</span>
                     </div>
-                    <a href="pages/gallery.html" class="text-[#00f5d4] hover:underline font-mono text-sm inline-flex items-center gap-2">
-                        Learn More <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    <a href="pages/gallery.html" class="text-accent hover:text-white font-mono text-sm inline-flex items-center gap-2 group-hover:translate-x-2 transition-transform">
+                        Learn More <i data-feather="chevrons-right" class="w-4 h-4"></i>
                     </a>
                 </div>
 
-                <div class="club-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-full h-48 bg-gradient-to-br from-[#112240] to-[#0a192f] rounded-lg mb-6 flex items-center justify-center">
-                        <i data-feather="wifi" class="w-20 h-20 text-[#00f5d4] opacity-50"></i>
+                <div class="club-card group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-full h-48 bg-gradient-to-br from-[#0f1a2e] to-[#050a14] border-b border-gray-800 mb-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=400')] opacity-20 bg-cover bg-center"></div>
+                        <i data-feather="wifi" class="w-16 h-16 text-accent opacity-80 relative z-10"></i>
+                        <!-- Scanline -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-[10px] w-full animate-[scan_4s_linear_infinite] opacity-30 pointer-events-none"></div>
                     </div>
-                    <h3 class="text-xl font-bold text-light-slate mb-3">IoT Home Automation</h3>
-                    <p class="text-slate-400 mb-4">
+                    <h3 class="text-xl font-bold font-orbitron text-light-slate mb-3">Home Automation</h3>
+                    <p class="text-slate-400 mb-4 font-rajdhani text-sm">
                         Complete home automation system with mobile app control, voice commands, and energy monitoring.
                     </p>
                     <div class="flex flex-wrap gap-2 mb-4">
@@ -205,15 +246,15 @@
                         <span class="skill-tag">Flutter</span>
                         <span class="skill-tag">Firebase</span>
                     </div>
-                    <a href="pages/gallery.html" class="text-[#00f5d4] hover:underline font-mono text-sm inline-flex items-center gap-2">
-                        Learn More <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    <a href="pages/gallery.html" class="text-accent hover:text-white font-mono text-sm inline-flex items-center gap-2 group-hover:translate-x-2 transition-transform">
+                        Learn More <i data-feather="chevrons-right" class="w-4 h-4"></i>
                     </a>
                 </div>
             </div>
 
             <div class="text-center mt-12">
-                <a href="pages/gallery.html" class="cta-secondary">
-                    View Gallery <i data-feather="arrow-right" class="w-5 h-5"></i>
+                <a href="pages/gallery.html" class="project-btn">
+                    Access Full Gallery <i data-feather="arrow-right" class="w-5 h-5 ml-2"></i>
                 </a>
             </div>
         </section>

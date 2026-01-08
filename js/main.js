@@ -133,7 +133,7 @@ window.addEventListener('resize', resize);
 class Particle {
     constructor(x, y, dx, dy, size) {
         this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size;
-        this.color = `rgba(0, 245, 212, ${Math.random() * 0.5 + 0.1})`;
+        this.color = `rgba(0, 242, 255, ${Math.random() * 0.5 + 0.1})`;
     }
     draw() {
         ctx.beginPath();
@@ -174,7 +174,7 @@ const connect = () => {
             const dist = dx * dx + dy * dy;
             if (dist < (canvas.width / 7) * (canvas.height / 7)) {
                 const opacity = 1 - dist / 20000;
-                ctx.strokeStyle = `rgba(0,245,212,${opacity * 0.1})`;
+                ctx.strokeStyle = `rgba(0, 242, 255, ${opacity * 0.1})`;
                 ctx.lineWidth = 1;
                 ctx.beginPath();
                 ctx.moveTo(particles[a].x, particles[a].y);
@@ -200,21 +200,21 @@ if (canvas && ctx) {
 
 // Typing animation
 const typingText = document.getElementById('typingText');
-const words = ["AI & Robotics Innovator", "Tech Mentor", "Future Engineer"];
+const words = ["Student-Led Community", "Future Leaders", "Technical Excellence"];
 let i = 0, j = 0, currentWord = '', isDeleting = false;
 
 function type() {
     if (!typingText) return;
     currentWord = words[i];
     if (!isDeleting) {
-        typingText.innerHTML = currentWord.slice(0, ++j) + '<span class="cursor"></span>';
+        typingText.innerHTML = currentWord.slice(0, ++j);
         if (j === currentWord.length) {
             isDeleting = true;
             setTimeout(type, 1000);
             return;
         }
     } else {
-        typingText.innerHTML = currentWord.slice(0, --j) + '<span class="cursor"></span>';
+        typingText.innerHTML = currentWord.slice(0, --j);
         if (j === 0) {
             isDeleting = false;
             i = (i + 1) % words.length;
