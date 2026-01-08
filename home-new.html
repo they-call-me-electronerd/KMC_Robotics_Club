@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Robotics & AI Innovation Club | Build • Code • Innovate</title>
+    <meta name="description" content="Join the leading Robotics & AI Innovation Club. Building future innovators through hands-on projects, workshops, and competitions.">
+    <meta name="keywords" content="robotics club, AI club, innovation, engineering, technology, student club">
+    <meta property="og:title" content="Robotics & AI Innovation Club">
+    <meta property="og:description" content="Building the Future, One Innovation at a Time">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-navy': '#0a192f',
+                        'light-navy': '#112240',
+                        'slate': '#8892b0',
+                        'light-slate': '#ccd6f6',
+                        'accent': '#00f5d4',
+                        'accent-glow': 'rgba(0, 245, 212, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@400;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/club-styles.css">
+</head>
+<body class="antialiased">
+    <canvas id="particle-canvas"></canvas>
+    
+    <div class="shape-blob one"></div>
+    <div class="shape-blob two"></div>
+    <div class="shape-blob three"></div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">
+        <i data-feather="moon" id="themeIcon"></i>
+    </button>
+
+    <!-- Navigation -->
+    <header class="fixed inset-x-0 top-0 z-50 bg-[#0a192f]/95 backdrop-blur-md shadow-lg border-b border-[#233554]">
+        <nav class="container mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00f5d4] to-[#00b4d8] flex items-center justify-center">
+                    <i data-feather="cpu" class="w-6 h-6 text-[#0a192f]"></i>
+                </div>
+                <div>
+                    <div class="text-xl font-bold font-mono text-[#00f5d4]">R&AI Club</div>
+                    <div class="text-xs text-slate-400 font-mono">Build • Code • Innovate</div>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link font-mono active">Home</a>
+                <a href="about.html" class="nav-link font-mono">About Us</a>
+                <a href="team.html" class="nav-link font-mono">Team</a>
+                <a href="projects.html" class="nav-link font-mono">Projects</a>
+                <a href="events.html" class="nav-link font-mono">Events</a>
+                <a href="gallery.html" class="nav-link font-mono">Gallery</a>
+                <a href="join.html" class="nav-link font-mono btn-join">Join Us</a>
+            </div>
+
+            <button id="mobile-menu-button" class="md:hidden text-[#00f5d4]">
+                <i data-feather="menu" class="w-6 h-6"></i>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#112240] border-t border-[#233554]">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="index.html" class="nav-link-mobile font-mono text-[#00f5d4]">Home</a>
+                <a href="about.html" class="nav-link-mobile font-mono">About Us</a>
+                <a href="team.html" class="nav-link-mobile font-mono">Team</a>
+                <a href="projects.html" class="nav-link-mobile font-mono">Projects</a>
+                <a href="events.html" class="nav-link-mobile font-mono">Events</a>
+                <a href="gallery.html" class="nav-link-mobile font-mono">Gallery</a>
+                <a href="join.html" class="nav-link-mobile font-mono text-[#00f5d4]">Join Us</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <!-- Hero Section -->
+        <section class="hero-institutional pt-32" data-aos="fade-up">
+            <div class="hero-content">
+                <div class="hero-glow"></div>
+                
+                <div class="mb-6" data-aos="fade-down">
+                    <span class="inline-block px-4 py-2 bg-[#00f5d4]/10 border border-[#00f5d4] rounded-full text-[#00f5d4] text-sm font-mono">
+                        Est. 2024 • Innovation Driven
+                    </span>
+                </div>
+
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 gradient-text" data-aos="fade-up" data-aos-delay="100">
+                    Robotics & AI<br/>Innovation Club
+                </h1>
+
+                <div class="text-2xl md:text-3xl text-[#00f5d4] font-mono mb-8 min-h-[40px]" data-aos="fade-up" data-aos-delay="200">
+                    <span id="typingText"></span>
+                </div>
+
+                <p class="text-xl text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed" data-aos="fade-up" data-aos-delay="300">
+                    We are a community of passionate students pushing the boundaries of robotics and artificial intelligence. 
+                    Join us to build cutting-edge projects, compete nationally, and shape the future of technology.
+                </p>
+
+                <div class="flex flex-wrap gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
+                    <a href="join.html" class="cta-primary">
+                        <i data-feather="user-plus" class="w-5 h-5"></i>
+                        Join the Club
+                    </a>
+                    <a href="projects.html" class="cta-secondary">
+                        <i data-feather="code" class="w-5 h-5"></i>
+                        Explore Projects
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 max-w-4xl mx-auto">
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Active Members</div>
+                    </div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="stat-number">25+</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="700">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Workshops Held</div>
+                    </div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="800">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Awards Won</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="py-20" data-aos="fade-up">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="section-header-club text-center mb-16">Our Mission</h2>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="club-card text-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#00f5d4]/10 flex items-center justify-center">
+                            <i data-feather="zap" class="w-8 h-8 text-[#00f5d4]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light-slate mb-4">Innovate</h3>
+                        <p class="text-slate-400">
+                            Develop cutting-edge robotics and AI solutions that solve real-world problems and push technological boundaries.
+                        </p>
+                    </div>
+
+                    <div class="club-card text-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#00f5d4]/10 flex items-center justify-center">
+                            <i data-feather="users" class="w-8 h-8 text-[#00f5d4]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light-slate mb-4">Collaborate</h3>
+                        <p class="text-slate-400">
+                            Foster a collaborative environment where members learn from each other and work together on ambitious projects.
+                        </p>
+                    </div>
+
+                    <div class="club-card text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-[#00f5d4]/10 flex items-center justify-center">
+                            <i data-feather="award" class="w-8 h-8 text-[#00f5d4]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light-slate mb-4">Compete</h3>
+                        <p class="text-slate-400">
+                            Represent our institution in national and international robotics competitions, bringing home top honors.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Projects -->
+        <section class="py-20" data-aos="fade-up">
+            <h2 class="section-header-club text-center mb-16">Featured Projects</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="club-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-full h-48 bg-gradient-to-br from-[#112240] to-[#0a192f] rounded-lg mb-6 flex items-center justify-center">
+                        <i data-feather="cpu" class="w-20 h-20 text-[#00f5d4] opacity-50"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-light-slate mb-3">Advanced Humanoid Robot</h3>
+                    <p class="text-slate-400 mb-4">
+                        AI-powered humanoid with voice recognition, facial detection, and autonomous navigation capabilities.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">AI</span>
+                        <span class="skill-tag">IoT</span>
+                    </div>
+                    <a href="projects.html" class="text-[#00f5d4] hover:underline font-mono text-sm inline-flex items-center gap-2">
+                        Learn More <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <div class="club-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-full h-48 bg-gradient-to-br from-[#112240] to-[#0a192f] rounded-lg mb-6 flex items-center justify-center">
+                        <i data-feather="eye" class="w-20 h-20 text-[#00f5d4] opacity-50"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-light-slate mb-3">Smart Surveillance System</h3>
+                    <p class="text-slate-400 mb-4">
+                        Real-time object detection and tracking system using advanced computer vision and machine learning.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">YOLO</span>
+                        <span class="skill-tag">Raspberry Pi</span>
+                    </div>
+                    <a href="projects.html" class="text-[#00f5d4] hover:underline font-mono text-sm inline-flex items-center gap-2">
+                        Learn More <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <div class="club-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-full h-48 bg-gradient-to-br from-[#112240] to-[#0a192f] rounded-lg mb-6 flex items-center justify-center">
+                        <i data-feather="wifi" class="w-20 h-20 text-[#00f5d4] opacity-50"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-light-slate mb-3">IoT Home Automation</h3>
+                    <p class="text-slate-400 mb-4">
+                        Complete home automation system with mobile app control, voice commands, and energy monitoring.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="skill-tag">ESP32</span>
+                        <span class="skill-tag">Flutter</span>
+                        <span class="skill-tag">Firebase</span>
+                    </div>
+                    <a href="projects.html" class="text-[#00f5d4] hover:underline font-mono text-sm inline-flex items-center gap-2">
+                        Learn More <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="projects.html" class="cta-secondary">
+                    View All Projects <i data-feather="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- What We Offer -->
+        <section class="py-20" data-aos="fade-up">
+            <h2 class="section-header-club text-center mb-16">What We Offer</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="club-card" data-aos="fade-right" data-aos-delay="100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-[#00f5d4]/10 flex items-center justify-center flex-shrink-0">
+                            <i data-feather="book-open" class="w-6 h-6 text-[#00f5d4]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-light-slate mb-2">Workshops & Training</h3>
+                            <p class="text-slate-400">
+                                Regular hands-on workshops on Arduino, Raspberry Pi, AI, machine learning, and robotics fundamentals.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="club-card" data-aos="fade-left" data-aos-delay="200">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-[#00f5d4]/10 flex items-center justify-center flex-shrink-0">
+                            <i data-feather="code" class="w-6 h-6 text-[#00f5d4]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-light-slate mb-2">Project Development</h3>
+                            <p class="text-slate-400">
+                                Work on real-world projects with mentorship from seniors and industry professionals.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="club-card" data-aos="fade-right" data-aos-delay="300">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-[#00f5d4]/10 flex items-center justify-center flex-shrink-0">
+                            <i data-feather="trophy" class="w-6 h-6 text-[#00f5d4]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-light-slate mb-2">Competition Training</h3>
+                            <p class="text-slate-400">
+                                Prepare for national and international robotics competitions with dedicated coaching sessions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="club-card" data-aos="fade-left" data-aos-delay="400">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-[#00f5d4]/10 flex items-center justify-center flex-shrink-0">
+                            <i data-feather="share-2" class="w-6 h-6 text-[#00f5d4]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-light-slate mb-2">Networking Opportunities</h3>
+                            <p class="text-slate-400">
+                                Connect with industry professionals, alumni, and fellow enthusiasts at our events and seminars.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Events Teaser -->
+        <section class="py-20" data-aos="fade-up">
+            <h2 class="section-header-club text-center mb-16">Upcoming Events</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="event-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="event-date">
+                        <i data-feather="calendar" class="w-4 h-4 inline mr-2"></i>
+                        February 15, 2026
+                    </div>
+                    <h3 class="text-xl font-bold text-light-slate mb-3">Introduction to AI & Machine Learning</h3>
+                    <p class="text-slate-400 mb-4">
+                        A comprehensive workshop covering the fundamentals of artificial intelligence and practical ML applications.
+                    </p>
+                    <a href="events.html" class="text-[#00f5d4] hover:underline font-mono text-sm inline-flex items-center gap-2">
+                        Register Now <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <div class="event-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="event-date">
+                        <i data-feather="calendar" class="w-4 h-4 inline mr-2"></i>
+                        March 1-3, 2026
+                    </div>
+                    <h3 class="text-xl font-bold text-light-slate mb-3">National Robotics Competition 2026</h3>
+                    <p class="text-slate-400 mb-4">
+                        Compete with the best teams from across the country in various robotics challenges.
+                    </p>
+                    <a href="events.html" class="text-[#00f5d4] hover:underline font-mono text-sm inline-flex items-center gap-2">
+                        Learn More <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="events.html" class="cta-secondary">
+                    View All Events <i data-feather="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20" data-aos="fade-up">
+            <div class="club-card text-center max-w-4xl mx-auto p-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-light-slate mb-6">
+                    Ready to Start Your Innovation Journey?
+                </h2>
+                <p class="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
+                    Join a community of passionate innovators and build projects that matter. 
+                    No prior experience required – just bring your curiosity and enthusiasm.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="join.html" class="cta-primary">
+                        <i data-feather="user-plus" class="w-5 h-5"></i>
+                        Become a Member
+                    </a>
+                    <a href="contact.html" class="cta-secondary">
+                        <i data-feather="mail" class="w-5 h-5"></i>
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative py-16 text-center bg-[#0a192f]/95 border-t border-[#233554] overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="mb-8">
+                <h3 class="font-mono text-2xl font-bold text-[#00f5d4] mb-2">Robotics & AI Innovation Club</h3>
+                <p class="text-slate-400 font-mono text-sm">Building the Future, One Innovation at a Time</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-8 text-left md:text-center">
+                <div>
+                    <h4 class="text-[#00f5d4] font-semibold mb-3 font-mono">Club</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="about.html" class="hover:text-[#00f5d4] transition-colors">About Us</a></li>
+                        <li><a href="team.html" class="hover:text-[#00f5d4] transition-colors">Our Team</a></li>
+                        <li><a href="join.html" class="hover:text-[#00f5d4] transition-colors">Join Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[#00f5d4] font-semibold mb-3 font-mono">Activities</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="projects.html" class="hover:text-[#00f5d4] transition-colors">Projects</a></li>
+                        <li><a href="events.html" class="hover:text-[#00f5d4] transition-colors">Events</a></li>
+                        <li><a href="gallery.html" class="hover:text-[#00f5d4] transition-colors">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[#00f5d4] font-semibold mb-3 font-mono">Resources</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[#00f5d4] font-semibold mb-3 font-mono">Connect</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="contact.html" class="hover:text-[#00f5d4] transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Newsletter</a></li>
+                        <li><a href="#" class="hover:text-[#00f5d4] transition-colors">Sponsors</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-[#112240] border border-[#233554] flex items-center justify-center hover:border-[#00f5d4] hover:bg-[#00f5d4]/10 transition-all">
+                    <i data-feather="facebook" class="w-5 h-5 text-slate-400"></i>
+                </a>
+                <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-[#112240] border border-[#233554] flex items-center justify-center hover:border-[#00f5d4] hover:bg-[#00f5d4]/10 transition-all">
+                    <i data-feather="instagram" class="w-5 h-5 text-slate-400"></i>
+                </a>
+                <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-[#112240] border border-[#233554] flex items-center justify-center hover:border-[#00f5d4] hover:bg-[#00f5d4]/10 transition-all">
+                    <i data-feather="github" class="w-5 h-5 text-slate-400"></i>
+                </a>
+                <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-[#112240] border border-[#233554] flex items-center justify-center hover:border-[#00f5d4] hover:bg-[#00f5d4]/10 transition-all">
+                    <i data-feather="youtube" class="w-5 h-5 text-slate-400"></i>
+                </a>
+                <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-[#112240] border border-[#233554] flex items-center justify-center hover:border-[#00f5d4] hover:bg-[#00f5d4]/10 transition-all">
+                    <i data-feather="linkedin" class="w-5 h-5 text-slate-400"></i>
+                </a>
+            </div>
+
+            <div class="border-t border-[#233554] pt-6">
+                <p class="text-slate-500 text-sm font-mono">
+                    © 2026 Robotics & AI Innovation Club. All rights reserved.
+                </p>
+                <p class="text-slate-600 text-xs font-mono mt-2">
+                    Empowering the next generation of innovators
+                </p>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 -z-10 opacity-10 pointer-events-none">
+            <div class="absolute top-1/2 left-1/4 w-96 h-96 bg-[#00f5d4] rounded-full blur-3xl"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#00b4d8] rounded-full blur-3xl"></div>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollToTop">
+        <i data-feather="arrow-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
