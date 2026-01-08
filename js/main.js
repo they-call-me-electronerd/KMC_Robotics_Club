@@ -1,3 +1,24 @@
+function adjustNavLinks(isRootPage) {
+    const navRoot = document.getElementById('nav-placeholder');
+    if (!navRoot) return;
+
+    const targetMap = {
+        home: isRootPage ? 'index.html' : '../index.html',
+        about: isRootPage ? 'pages/about.html' : 'about.html',
+        team: isRootPage ? 'pages/team.html' : 'team.html',
+        events: isRootPage ? 'pages/events.html' : 'events.html',
+        gallery: isRootPage ? 'pages/gallery.html' : 'gallery.html',
+        join: isRootPage ? 'pages/join.html' : 'join.html'
+    };
+
+    navRoot.querySelectorAll('[data-page]').forEach((link) => {
+        const pageKey = link.getAttribute('data-page');
+        if (pageKey && targetMap[pageKey]) {
+            link.setAttribute('href', targetMap[pageKey]);
+        }
+    });
+}
+
 // Load navigation component
 function loadNavigation() {
     const navPlaceholder = document.getElementById('nav-placeholder');
@@ -13,6 +34,7 @@ function loadNavigation() {
         .then(response => response.text())
         .then(html => {
             navPlaceholder.innerHTML = html;
+            adjustNavLinks(isRootPage);
             // Re-initialize Feather Icons after nav loads
             if (window.feather && typeof window.feather.replace === 'function') {
                 window.feather.replace();
