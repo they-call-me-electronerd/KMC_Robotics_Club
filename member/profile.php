@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
             case 'update-avatar':
                 if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-                    $errors = Security::validateFileUpload($_FILES['avatar'], ['image/jpeg', 'image/png', 'image/gif', 'image/webp'], 2 * 1024 * 1024);
+                    $errors = Security::validateFileUpload($_FILES['avatar'], ['jpg', 'jpeg', 'png', 'gif', 'webp'], 2 * 1024 * 1024);
                     
                     if (empty($errors)) {
                         $filename = Security::generateSafeFilename($_FILES['avatar']['name']);
